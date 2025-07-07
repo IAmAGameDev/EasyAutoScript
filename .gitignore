@@ -1,0 +1,48 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.vs/
+
+# Rider
+.idea/
+
+# Visual Studio Code workspace files
+.vscode/
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Backup files
+*.bak
+*.old
+*.orig
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# Logs
+*.log
+
+# Dotnet publish output
+publish/
+
+# Mac system files
+.DS_Store
+
+# Windows thumbnail cache files
+Thumbs.db
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Env
+.env
