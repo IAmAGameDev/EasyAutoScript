@@ -25,6 +25,8 @@
 
 			Console.WriteLine("Parsing successful, executing program\n");
 
+			Console.WriteLine("Nothing here yet");
+
 			Console.WriteLine("\nProgram finished");
 
 			await Task.CompletedTask;

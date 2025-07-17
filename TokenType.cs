@@ -7,12 +7,17 @@ namespace EasyAutoScript
         String,
         Number,
 
-        // Parenthesis
+        // Parenthesis / Equals
         OpenParenthesis,
         CloseParenthesis,
+        Equals,
 
-        // Statements
+        // Statements / Identifiers / Keywords
+        Identifier,
+
         Write,
+
+        Var,
 
         // End Of File
         EOF,

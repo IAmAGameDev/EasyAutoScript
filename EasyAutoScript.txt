@@ -1,3 +1,5 @@
 123
 456
 "Hello"
+var Hello = "Hello"
+Write("Hello")

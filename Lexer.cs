@@ -6,6 +6,11 @@ namespace EasyAutoScript
         private readonly List<Token> _tokens = [];
         private int _current = 0;
         private int _line = 1;
+        private Dictionary<string, TokenType> _identifiers = new()
+        {
+            { "var", TokenType.Var },
+            { "Write", TokenType.Write },
+        };
 
         public List<Token> Tokenise()
         {
@@ -13,7 +18,7 @@ namespace EasyAutoScript
             {
                 ScanToken();
             }
-            AddToken(TokenType.EOF, "");
+            AddToken(TokenType.EOF, "EOF");
 
             return _tokens;
         }
@@ -28,6 +33,9 @@ namespace EasyAutoScript
                     break;
                 case ')':
                     AddToken(TokenType.CloseParenthesis, ")");
+                    break;
+                case '=':
+                    AddToken(TokenType.Equals, "=");
                     break;
 
                 case '\n': // New Line
@@ -49,72 +57,105 @@ namespace EasyAutoScript
                         Number();
                         return;
                     }
+                    else if (IsAlphaNumeric(c))
+                    {
+                        Identifier();
+                        return;
+                    }
 
                     throw new Exception($"Unknown character: {c} on line: '{_line}'");
             }
         }
 
-        private void Number()
+        private void Identifier()
         {
-            string Lexeme = _code[_current - 1].ToString();
+            string identifier = _code[_current - 1].ToString();
 
             while (!IsAtEnd())
             {
-                char c = Peek();
+                // Keep eating letters until it is no longer a letter
+                char c = Advance();
+                if (!char.IsLetter(c))
+                {
+                    break;
+                }
+                identifier += c;
+            }
+
+            if (_identifiers.TryGetValue(identifier, out TokenType Type))
+            {
+                AddToken(Type, identifier, identifier);
+                return;
+            }
+
+            AddToken(TokenType.Identifier, identifier, identifier);
+        }
+
+        private void Number()
+        {
+            string value = _code[_current - 1].ToString();
+
+            while (!IsAtEnd())
+            {
+                char c = Advance();
                 if (!char.IsNumber(c))
                 {
                     break;
                 }
-                Lexeme += c;
-                _current++;
+                value += c;
             }
 
             // Check if it is a decimal
             if (!IsAtEnd() && Peek() == '.')
             {
-                Lexeme += Advance();
+                value += Advance();
                 while (!IsAtEnd())
                 {
-                    char c = Peek();
+                    char c = Advance();
                     if (!char.IsNumber(c))
                     {
                         break;
                     }
-                    Lexeme += c;
-                    _current++;
+                    value += c;
                 }
             }
 
-            AddToken(TokenType.Number, Lexeme, Convert.ToDouble(Lexeme));
+            AddToken(TokenType.Number, value, Convert.ToDouble(value));
         }
 
         private void String()
         {
-            string Lexeme = _code[_current - 1].ToString();
+            string value = _code[_current - 1].ToString();
 
             while (!IsAtEnd())
             {
                 char c = Advance();
                 if (c == '"')
                 {
-                    Lexeme += c;
+                    value += c;
                     break;
                 }
-                Lexeme += c;
+                value += c;
             }
 
-            AddToken(TokenType.String, Lexeme, Lexeme);
+            string Lexeme = value.Substring(1, value.Length - 2);
+            AddToken(TokenType.String, Lexeme, value);
         }
 
         #region Helpers
+        /// <summary>
+        /// Adds a token 
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <param name="Lexeme"></param>
         public void AddToken(TokenType Type, string Lexeme)
         {
-            _tokens.Add(new(Type, Lexeme, null, _line));
+            _tokens.Add(new(Type, $"\"{Lexeme}\"", null, _line));
         }
 
         public void AddToken(TokenType Type, string Lexeme, object Literal)
         {
-            _tokens.Add(new(Type, Lexeme, Literal, _line));
+            _tokens.Add(new(Type, $"\"{Lexeme}\"", Literal, _line));
         }
 
         /// <summary>
@@ -135,6 +176,16 @@ namespace EasyAutoScript
             char c = _code[_current];
             _current++;
             return c;
+        }
+
+        /// <summary>
+        /// Returns true if it is a number/letter/'_'
+        /// </summary>
+        /// <param name="c"></param> The character to check
+        /// <returns></returns> Returns true if it is a number/letter/'_'
+        private bool IsAlphaNumeric(char c)
+        {
+            return char.IsLetterOrDigit(c) || c == '_';
         }
 
         /// <summary>
