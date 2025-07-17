@@ -6,7 +6,7 @@
 
 		static async Task Main(string[] args)
 		{
-			string code = File.ReadAllText("E:\\EasyAutoScript\\EasyAutoScript.txt");
+			string code = File.ReadAllText("EasyAutoScript.txt");
 
 			Console.WriteLine("Parsing Tokens");
 
