@@ -5,8 +5,8 @@ This repository contains the code for a educational new coding language I create
 ## To-Do List
 
 - [ ] Documentation
-- [ ] Rebuild the Parser.cs, Rebuild the Interpreter.cs
 - [ ] Create a new ParseException for easier debugging
+- [ ] Use a Visitor pattern to Interpret instead of a if statement
 - [ ] Add a try block to the Program.cs for file load etc
 - [ ] Create a BooleanLiteralExpression to handle booleans
 - [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false

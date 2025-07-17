@@ -38,13 +38,16 @@ namespace EasyAutoScript
 
         private IExpression ParseExpression()
         {
-
-            if (Match(TokenType.Boolean))
-                return new BooleanLiteralExpression(Convert.ToBoolean(Peek().Literal));
-            else if (Match(TokenType.Number))
-                return new NumberLiteralExpression(Convert.ToDouble(Peek().Literal));
-            else if (Match(TokenType.String))
-                return new StringLiteralExpression(Convert.ToString(Peek().Literal) ?? string.Empty);
+            if (Check(TokenType.Boolean))
+                return new BooleanLiteralExpression(Convert.ToBoolean(Advance().Literal));
+            else if (Check(TokenType.Number))
+                return new NumberLiteralExpression(Convert.ToDouble(Advance().Literal));
+            else if (Check(TokenType.String))
+            {
+                string value = Convert.ToString(Advance().Literal) ?? string.Empty;
+                value = value[1..^1];
+                return new StringLiteralExpression(value);
+            }
             else
                 throw new Exception($"Unable to parse: {Peek()}");
         }

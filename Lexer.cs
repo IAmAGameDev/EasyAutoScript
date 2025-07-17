@@ -137,7 +137,7 @@ namespace EasyAutoScript
                 value += c;
             }
 
-            string Lexeme = value.Substring(1, value.Length - 2);
+            string Lexeme = value[1..^1];
             AddToken(TokenType.String, Lexeme, value);
         }
 
