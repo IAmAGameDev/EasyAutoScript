@@ -73,13 +73,12 @@ namespace EasyAutoScript
 
             while (!IsAtEnd())
             {
-                // Keep eating letters until it is no longer a letter
-                char c = Advance();
+                char c = Peek();
                 if (!char.IsLetter(c))
                 {
                     break;
                 }
-                identifier += c;
+                identifier += Advance();
             }
 
             if (_identifiers.TryGetValue(identifier, out TokenType Type))
