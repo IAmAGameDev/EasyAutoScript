@@ -4,8 +4,15 @@ This repository contains the code for a educational new coding language I create
 
 ## To-Do List
 
+`Errors`:
+
+- [ ] Cannot pass a number value into Write Statements doesn't return a ( bracket Token
+
+`Features`:
+
 - [ ] Documentation
 - [ ] Create a new ParseException for easier debugging
+- [ ] Make the write statement handle booleans (will need some magic as if I remember correctly it breaks)
 - [ ] Use a Visitor pattern to Interpret instead of a if statement
 - [ ] Add a try block to the Program.cs for file load etc
 - [ ] Create a BooleanLiteralExpression to handle booleans

@@ -1,1 +1,1 @@
-Write("Hello")
+Write(123)
