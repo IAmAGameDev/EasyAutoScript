@@ -10,14 +10,11 @@ This repository contains the code for a educational new coding language I create
 
 `Features`:
 
-- [ ] Documentation
 - [ ] Create a new ParseException for easier debugging
-- [ ] Make the write statement handle booleans (will need some magic as if I remember correctly it breaks)
+- [ ] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load etc
 - [ ] Create a BooleanLiteralExpression to handle booleans
 - [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
-- [ ] Clear()
-- [ ] Write() - Accept Boolean to just debug true
 - [ ] GetOpenWindowTitle()
 - [ ] GetForeground Application - Console Logs HWND
 - [ ] Handle line comments // or ; or something
@@ -29,7 +26,7 @@ This repository contains the code for a educational new coding language I create
 - [ ] `HARD` Add Var handling (Boolean/String/Int)
 - [ ] `HARD` List Vars - WIP
 
-  - [x] Declare a LIST
+  - [ ] Declare a LIST
   - [ ] LIST[0]
   - [ ] LIST[0] = 1
   - [ ] LIST.Insert(0, Value)
@@ -47,3 +44,13 @@ This repository contains the code for a educational new coding language I create
 ## Documentation
 
 As this project is so small here is the current list of commands that is accepted:
+
+- `Write`
+
+  - `[in]` `boolean/number/string` value.
+  - `[out]` Inputted message displayed displayed to `console`.
+
+- `Clear`
+
+  - `[in]` none.
+  - `[out]` `console` text cleared.

@@ -22,19 +22,40 @@ namespace EasyAutoScript
 
         private IStatement MakeStatement()
         {
-            if (Match(TokenType.Write))
+            if (Match(TokenType.Clear))
+                return MakeClearStatement();
+            else if (Match(TokenType.Write))
                 return MakeWriteStatement();
             else
                 throw new Exception($"Unable to parse {_tokens[_current]}");
         }
 
+        #region Statements
+        private ClearStatement MakeClearStatement()
+        {
+            MakeEmptyExpression();
+            return new ClearStatement();
+        }
         private WriteStatement MakeWriteStatement()
+        {
+            return new WriteStatement(MakeSingleInputExpression());
+        }
+        #endregion
+
+        #region Expressions
+        private void MakeEmptyExpression()
+        {
+            Consume(TokenType.OpenParenthesis, $"Expected a: '(' but recieved: {Peek().Lexeme}");
+            Consume(TokenType.CloseParenthesis, $"Expected a: ')' but recieved: {Peek().Lexeme}");
+        }
+        private IExpression MakeSingleInputExpression()
         {
             Consume(TokenType.OpenParenthesis, $"Expected a: '(' but recieved: {Peek().Lexeme}");
             IExpression expression = ParseExpression();
             Consume(TokenType.CloseParenthesis, $"Expected a: ')' but recieved: {Peek().Lexeme}");
-            return new WriteStatement(expression);
+            return expression;
         }
+        #endregion
 
         private IExpression ParseExpression()
         {

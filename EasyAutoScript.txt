@@ -1,1 +1,2 @@
-Write(true)
+Write(123)
+Clear()

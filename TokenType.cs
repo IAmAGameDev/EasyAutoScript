@@ -15,6 +15,7 @@ namespace EasyAutoScript
         // Statements / Identifiers / Keywords
         Identifier,
 
+        Clear,
         Write,
 
         Var,

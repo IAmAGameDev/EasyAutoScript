@@ -8,6 +8,9 @@ namespace EasyAutoScript
         private int _line = 1;
         private Dictionary<string, TokenType> _identifiers = new()
         {
+            { "true", TokenType.Boolean},
+            { "false", TokenType.Boolean },
+            { "Clear", TokenType.Clear },
             { "var", TokenType.Var },
             { "Write", TokenType.Write },
         };
