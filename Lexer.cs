@@ -96,12 +96,14 @@ namespace EasyAutoScript
 
             while (!IsAtEnd())
             {
-                char c = Advance();
+                char c = Peek();
                 if (!char.IsNumber(c))
                 {
                     break;
                 }
+                Console.WriteLine(c);
                 value += c;
+                Advance();
             }
 
             // Check if it is a decimal
