@@ -101,23 +101,23 @@ namespace EasyAutoScript
                 {
                     break;
                 }
-                Console.WriteLine(c);
                 value += c;
                 Advance();
             }
 
             // Check if it is a decimal
-            if (!IsAtEnd() && Peek() == '.')
+            if (!IsAtEnd() && Peek() == '.' && char.IsNumber(PeekNext()))
             {
                 value += Advance();
                 while (!IsAtEnd())
                 {
-                    char c = Advance();
+                    char c = Peek();
                     if (!char.IsNumber(c))
                     {
                         break;
                     }
                     value += c;
+                    Advance();
                 }
             }
 
@@ -166,6 +166,14 @@ namespace EasyAutoScript
         private char Peek()
         {
             return _code[_current];
+        }
+        /// <summary>
+        /// Returns the next _current char (c)
+        /// </summary>
+        /// <returns></returns> Returns the next _current char (c)
+        private char PeekNext()
+        {
+            return _code[_current + 1];
         }
 
         /// <summary>

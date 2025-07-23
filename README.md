@@ -6,7 +6,7 @@ This repository contains the code for a educational new coding language I create
 
 `Errors`:
 
-- [ ] Cannot pass a number value into Write Statements doesn't return a ( bracket Token
+- None currently known.
 
 `Features`:
 
