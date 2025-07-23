@@ -1,3 +1,4 @@
+using EasyAutoScript.Components;
 using EasyAutoScript.Expressions;
 using EasyAutoScript.Statements;
 
@@ -9,9 +10,12 @@ namespace EasyAutoScript
         {
             foreach (IStatement statement in statements)
             {
-                if (statement is WriteStatement writeStatement)
+                switch (statement)
                 {
-                    Console.WriteLine(EvaluateExpression(writeStatement.expression));
+                    case WriteStatement writeStatement:
+                        WriteStatementHandler writeStatementHandler = new(EvaluateExpression(writeStatement.expression));
+                        writeStatementHandler.Run();
+                        break;
                 }
             }
         }
