@@ -17,13 +17,19 @@ namespace EasyAutoScript
                     case ClearStatement:
                         ClearStatementHandler.Execute();
                         break;
+
                     case WriteStatement writeStatement:
                         WriteStatementHandler writeStatementHandler = new(EvaluateExpression(writeStatement.expression));
                         writeStatementHandler.Execute();
                         break;
+
+                    case VarAssignStatement varAssignStatement:
+                        _variableNamesAndValues[varAssignStatement.name] = EvaluateExpression(varAssignStatement.expression);
+                        break;
                     case VarStatement varStatement:
                         _variableNamesAndValues.Add(varStatement.name, EvaluateExpression(varStatement.expression));
                         break;
+
                     default:
                         throw new Exception($"Unable to Interpret: {statement}");
                 }

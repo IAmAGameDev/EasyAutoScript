@@ -1,3 +1,4 @@
+using System.Collections;
 using EasyAutoScript.Expressions;
 using EasyAutoScript.Statements;
 
@@ -28,15 +29,19 @@ namespace EasyAutoScript
                 return MakeWriteStatement();
             else if (Match(TokenType.Var))
                 return MakeVarStatement();
+            else if (Check(TokenType.Identifier))
+                return MakeVarAssignStatement();
             else
                 throw new Exception($"Unable to parse {_tokens[_current]}");
         }
+
         #region Statements
         private ClearStatement MakeClearStatement()
         {
             MakeEmptyExpression();
             return new ClearStatement();
         }
+
         private WriteStatement MakeWriteStatement()
         {
             return new WriteStatement(MakeSingleInputExpression());
@@ -47,6 +52,13 @@ namespace EasyAutoScript
             string name = Consume(TokenType.Identifier, $"Expected a: {{Name}} but recieved: {Peek().Lexeme}").Lexeme;
             Consume(TokenType.Equals, $"Expected a: '=' but recieved: {Peek().Lexeme}");
             return new VarStatement(name, ParseExpression());
+        }
+
+        private VarAssignStatement MakeVarAssignStatement()
+        {
+            string name = Consume(TokenType.Identifier, $"Expected a: {{Name}} but recieved: {Peek().Lexeme}").Lexeme;
+            Consume(TokenType.Equals, $"Expected a: '=' but recieved: {Peek().Lexeme}");
+            return new VarAssignStatement(name, ParseExpression());
         }
         #endregion
 
