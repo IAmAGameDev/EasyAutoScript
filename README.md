@@ -11,8 +11,8 @@ This repository contains the code for a educational new coding language I create
 `Features`:
 
 - [ ] Create a new ParseException for easier debugging
-- [ ] Add !true and !false handling
-- [ ] Add a try block to the Program.cs for file load etc
+- [x] Add !true and !false handling
+- [ ] Add a try block to the Program.cs for file load and custom Exceptions
 - [ ] Create a BooleanLiteralExpression to handle booleans
 - [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
 - [ ] GetOpenWindowTitle()
@@ -23,7 +23,6 @@ This repository contains the code for a educational new coding language I create
 - [ ] Move mouse position function.
 - [ ] Send mouse click.
 - [ ] Send keyboard/mouse action(s) (SendInput with BlockInput usage/flag)
-- [ ] `HARD` Add Var handling (Boolean/String/Int) - `Work In Progress`
 - [ ] `HARD` List Vars - WIP
 
   - [ ] Declare a LIST
@@ -45,12 +44,20 @@ This repository contains the code for a educational new coding language I create
 
 As this project is so small here is the current list of commands that is accepted:
 
-- `Write`
+- `Clear()`
+
+  - `[in]` none.
+  - `[out]` `console` text cleared.
+
+- `Write(value)`
 
   - `[in]` `boolean/number/string` value.
   - `[out]` Inputted message displayed displayed to `console`.
 
-- `Clear`
-
-  - `[in]` none.
-  - `[out]` `console` text cleared.
+- `Var`
+  - `var name = value`
+    - `[in]` `string` name and `boolean/number/string` value.
+    - `[out]` `value` stored in variable `name`.
+  - `name = value`
+    - `[in]` `string` name and `boolean/number/string` value.
+    - `[out]` `value` stored in variable `name` gets updated.

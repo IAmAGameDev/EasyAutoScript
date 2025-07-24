@@ -1,4 +1,2 @@
-var d = true
-Write(d)
-d = 987
-Write(d)
+var b = !false
+Write(b)

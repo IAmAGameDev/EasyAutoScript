@@ -1,4 +1,3 @@
-using System.Collections;
 using EasyAutoScript.Expressions;
 using EasyAutoScript.Statements;
 
@@ -89,13 +88,18 @@ namespace EasyAutoScript
                 value = value[1..^1];
                 return new StringLiteralExpression(value);
             }
+            else if (Match(TokenType.ExclamationMark))
+            {
+                bool value = !Convert.ToBoolean(Consume(TokenType.Boolean, $"Expected a: 'boolean' but recieved: {Peek().Lexeme}").Literal);
+                return new BooleanLiteralExpression(value);
+            }
             else if (Check(TokenType.Identifier))
             {
                 string name = Convert.ToString(Advance().Lexeme);
                 return new IdentifierExpression(name);
             }
             else
-                throw new Exception($"Unable to parse: {Peek()}");
+                throw new Exception($"Unable to parse expression: {Peek()}");
         }
 
         #region Helpers

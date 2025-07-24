@@ -7,10 +7,11 @@ namespace EasyAutoScript
         String,
         Number,
 
-        // Parenthesis / Equals
+        // Parenthesis / Equals / ExclamationMark
         OpenParenthesis,
         CloseParenthesis,
         Equals,
+        ExclamationMark,
 
         // Statements / Identifiers / Keywords
         Identifier,

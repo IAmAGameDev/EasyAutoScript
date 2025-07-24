@@ -40,6 +40,9 @@ namespace EasyAutoScript
                 case '=':
                     AddToken(TokenType.Equals, "=");
                     break;
+                case '!':
+                    AddToken(TokenType.ExclamationMark, "!");
+                    break;
 
                 case '\n': // New Line
                     _line++;
