@@ -26,10 +26,11 @@ namespace EasyAutoScript
                 return MakeClearStatement();
             else if (Match(TokenType.Write))
                 return MakeWriteStatement();
+            else if (Match(TokenType.Var))
+                return MakeVarStatement();
             else
                 throw new Exception($"Unable to parse {_tokens[_current]}");
         }
-
         #region Statements
         private ClearStatement MakeClearStatement()
         {
@@ -39,6 +40,13 @@ namespace EasyAutoScript
         private WriteStatement MakeWriteStatement()
         {
             return new WriteStatement(MakeSingleInputExpression());
+        }
+
+        private VarStatement MakeVarStatement()
+        {
+            string name = Consume(TokenType.Identifier, $"Expected a: {{Name}} but recieved: {Peek().Lexeme}").Lexeme;
+            Consume(TokenType.Equals, $"Expected a: '=' but recieved: {Peek().Lexeme}");
+            return new VarStatement(name, ParseExpression());
         }
         #endregion
 
@@ -68,6 +76,11 @@ namespace EasyAutoScript
                 string value = Convert.ToString(Advance().Literal) ?? string.Empty;
                 value = value[1..^1];
                 return new StringLiteralExpression(value);
+            }
+            else if (Check(TokenType.Identifier))
+            {
+                string name = Convert.ToString(Advance().Lexeme);
+                return new IdentifierExpression(name);
             }
             else
                 throw new Exception($"Unable to parse: {Peek()}");

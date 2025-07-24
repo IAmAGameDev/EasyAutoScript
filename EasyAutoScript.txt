@@ -1,2 +1,6 @@
-Write(123)
-Clear()
+var b = "123"
+Write(b)
+var c = 12345
+Write(c)
+var d = true
+Write(d)

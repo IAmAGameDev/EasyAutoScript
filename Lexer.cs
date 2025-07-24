@@ -90,6 +90,7 @@ namespace EasyAutoScript
                 return;
             }
 
+            _identifiers.Add(identifier, TokenType.Identifier);
             AddToken(TokenType.Identifier, identifier, identifier);
         }
 

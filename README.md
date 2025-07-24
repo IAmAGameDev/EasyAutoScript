@@ -23,7 +23,7 @@ This repository contains the code for a educational new coding language I create
 - [ ] Move mouse position function.
 - [ ] Send mouse click.
 - [ ] Send keyboard/mouse action(s) (SendInput with BlockInput usage/flag)
-- [ ] `HARD` Add Var handling (Boolean/String/Int)
+- [ ] `HARD` Add Var handling (Boolean/String/Int) - `Work In Progress`
 - [ ] `HARD` List Vars - WIP
 
   - [ ] Declare a LIST
