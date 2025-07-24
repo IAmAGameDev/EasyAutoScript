@@ -1,3 +1,5 @@
+using EasyAutoScript.Exceptions;
+
 namespace EasyAutoScript
 {
     public class Lexer(string code)
@@ -69,7 +71,7 @@ namespace EasyAutoScript
                         return;
                     }
 
-                    throw new Exception($"Unknown character: {c} on line: '{_line}'");
+                    throw new LexerException($"Unknown character: {c} on line: '{_line}'");
             }
         }
 

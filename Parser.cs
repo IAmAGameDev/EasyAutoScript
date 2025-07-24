@@ -1,3 +1,4 @@
+using EasyAutoScript.Exceptions;
 using EasyAutoScript.Expressions;
 using EasyAutoScript.Statements;
 
@@ -31,7 +32,7 @@ namespace EasyAutoScript
             else if (Check(TokenType.Identifier))
                 return MakeVarAssignStatement();
             else
-                throw new Exception($"Unable to parse {_tokens[_current]}");
+                throw new ParserException($"Unable to parse {_tokens[_current]}");
         }
 
         #region Statements
@@ -99,7 +100,7 @@ namespace EasyAutoScript
                 return new IdentifierExpression(name);
             }
             else
-                throw new Exception($"Unable to parse expression: {Peek()}");
+                throw new ParserException($"Unable to parse expression: {Peek()}");
         }
 
         #region Helpers
@@ -181,7 +182,7 @@ namespace EasyAutoScript
             {
                 return _tokens[_current - 1];
             }
-            throw new Exception(message);
+            throw new ParserException(message);
         }
 
         private bool IsAtEnd()

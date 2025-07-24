@@ -1,4 +1,5 @@
 using EasyAutoScript.Components;
+using EasyAutoScript.Exceptions;
 using EasyAutoScript.Expressions;
 using EasyAutoScript.Statements;
 
@@ -31,7 +32,7 @@ namespace EasyAutoScript
                         break;
 
                     default:
-                        throw new Exception($"Unable to Interpret: {statement}");
+                        throw new InterpreterException($"Unable to Interpret: {statement}");
                 }
             }
         }
@@ -49,9 +50,9 @@ namespace EasyAutoScript
                 case IdentifierExpression identifierExpression:
                     _variableNamesAndValues.TryGetValue(identifierExpression.name, out object? value);
                     if (value != null) { return value; }
-                    else throw new Exception($"Unable to Interpret Identifier: {expression}");
+                    else throw new InterpreterException($"Unable to Interpret Identifier: {expression}");
                 default:
-                    throw new Exception($"Unable to Interpret: {expression}");
+                    throw new InterpreterException($"Unable to Interpret: {expression}");
             }
         }
     }

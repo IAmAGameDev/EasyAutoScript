@@ -10,10 +10,10 @@ This repository contains the code for a educational new coding language I create
 
 `Features`:
 
-- [ ] Create a new ParseException for easier debugging
+- [x] Create a new CustomExceptions for easier debugging
 - [x] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
-- [ ] Create a BooleanLiteralExpression to handle booleans
+- [x] Create a BooleanLiteralExpression to handle booleans
 - [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
 - [ ] GetOpenWindowTitle()
 - [ ] GetForeground Application - Console Logs HWND
