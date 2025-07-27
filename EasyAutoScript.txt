@@ -1,3 +1,5 @@
 var b = !false
 Write(b)
-var b = !false22
+b = !true
+Sleep(1000)
+Write(b)
