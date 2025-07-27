@@ -50,6 +50,11 @@ As this project is so small here is the current list of commands that is accepte
   - `[in]` None.
   - `[out]` `console` text cleared.
 
+- `//`
+
+  - `[in]` // `Comment`
+  - `[out]` Line is skipped from being lexed.
+
 - `Sleep(value)`
 
   - `[in]` `number` value.
