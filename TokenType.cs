@@ -10,9 +10,9 @@ namespace EasyAutoScript
         // Parenthesis / Equals / ExclamationMark
         OpenParenthesis,
         CloseParenthesis,
+        Comment,
         Equals,
         ExclamationMark,
-
         // Statements / Identifiers / Keywords
         Identifier,
 

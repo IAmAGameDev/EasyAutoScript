@@ -48,6 +48,9 @@ namespace EasyAutoScript
                 case '!':
                     AddToken(TokenType.ExclamationMark, "!");
                     break;
+                case '/':
+                    Comment();
+                    break;
 
                 case '\n': // New Line
                     _line++;
@@ -75,6 +78,26 @@ namespace EasyAutoScript
                     }
 
                     throw new LexerException($"Unknown character: {c} on line: '{_line}'");
+            }
+        }
+
+        private void Comment()
+        {
+            Advance();
+
+            if (Peek() == '/')
+            {
+                Advance();
+            }
+
+            while (!IsAtEnd())
+            {
+                if (Peek() == '\n')
+                {
+                    Advance();
+                    break;
+                }
+                Advance();
             }
         }
 
