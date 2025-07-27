@@ -12,8 +12,11 @@ namespace EasyAutoScript
         {
             { "true", TokenType.Boolean},
             { "false", TokenType.Boolean },
-            { "Clear", TokenType.Clear },
+
             { "var", TokenType.Var },
+
+            { "Clear", TokenType.Clear },
+            { "Sleep", TokenType.Sleep },
             { "Write", TokenType.Write },
         };
 

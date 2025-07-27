@@ -25,6 +25,8 @@ namespace EasyAutoScript
         {
             if (Match(TokenType.Clear))
                 return MakeClearStatement();
+            else if (Match(TokenType.Sleep))
+                return MakeSleepStatement();
             else if (Match(TokenType.Write))
                 return MakeWriteStatement();
             else if (Match(TokenType.Var))
@@ -42,11 +44,17 @@ namespace EasyAutoScript
             return new ClearStatement();
         }
 
+        private SleepStatement MakeSleepStatement()
+        {
+            return new SleepStatement(MakeSingleInputExpression());
+        }
+
         private WriteStatement MakeWriteStatement()
         {
             return new WriteStatement(MakeSingleInputExpression());
         }
 
+        #region VarStatements
         private VarStatement MakeVarStatement()
         {
             string name = Consume(TokenType.Identifier, $"Expected a: {{Name}} but recieved: {Peek().Lexeme}").Lexeme;
@@ -60,6 +68,7 @@ namespace EasyAutoScript
             Consume(TokenType.Equals, $"Expected a: '=' but recieved: {Peek().Lexeme}");
             return new VarAssignStatement(name, ParseExpression());
         }
+        #endregion
         #endregion
 
         #region Expressions

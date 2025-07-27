@@ -39,7 +39,7 @@ namespace EasyAutoScript
 			Console.WriteLine("Parsing successful, executing program\n");
 
 			Interpreter interpreter = new(statements);
-			interpreter.Interpret();
+			await interpreter.Interpret();
 
 			Console.WriteLine("\nProgram finished");
 

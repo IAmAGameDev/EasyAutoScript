@@ -10,6 +10,7 @@ This repository contains the code for a educational new coding language I create
 
 `Features`:
 
+- [x] Sleep()
 - [x] Create a new CustomExceptions for easier debugging
 - [x] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
@@ -46,8 +47,13 @@ As this project is so small here is the current list of commands that is accepte
 
 - `Clear()`
 
-  - `[in]` none.
+  - `[in]` None.
   - `[out]` `console` text cleared.
+
+- `Sleep(value)`
+
+  - `[in]` `number` value.
+  - `[out]` Delay before the rest of the code execution.
 
 - `Write(value)`
 
