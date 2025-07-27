@@ -17,6 +17,7 @@ namespace EasyAutoScript
         Identifier,
 
         Clear,
+        Sleep,
         Write,
 
         Var,
