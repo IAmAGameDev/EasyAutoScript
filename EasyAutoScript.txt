@@ -1,3 +1,3 @@
-var x = GetForegroundWindow()
-Write(GetForegroundWindow())
+var x = GetOpenWindowTitle()
+Write(GetOpenWindowTitle())
 Write(x)

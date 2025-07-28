@@ -16,7 +16,7 @@ This repository contains the code for a educational new coding language I create
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
 - [x] Create a BooleanLiteralExpression to handle booleans
 - [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
-- [ ] GetOpenWindowTitle()
+- [x] GetOpenWindowTitle()
 - [x] GetForeground Application - Console Logs HWND
 - [ ] Handle line comments // or ; or something
 - [ ] SetForeground Application - Sets the Foreground Application Based on HWND
@@ -59,6 +59,11 @@ As this project is so small here is the current list of commands that is accepte
 
   - `[in]` None.
   - `[out]` `IntPtr` value of the currently active ForegroundWindow at the time of running this code.
+
+- `GetOpenWindowTitle()`
+
+  - `[in]` None.
+  - `[out]` `string` value of what the currently active window title is.
 
 - `Sleep(value)`
 
