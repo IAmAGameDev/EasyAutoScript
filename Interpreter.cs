@@ -67,6 +67,8 @@ namespace EasyAutoScript
 
                 case GetForegroundWindowExpression:
                     return GetForegroundWindowExpression.Evaluate();
+                case GetOpenWindowTitleExpression:
+                    return GetOpenWindowTitleExpression.Evaluate();
 
                 default:
                     throw new InterpreterException($"Unable to Interpret: {expression}");
