@@ -113,8 +113,15 @@ namespace EasyAutoScript
                 MakeEmptyExpression();
                 return new GetForegroundWindowExpression();
             }
+            else if (Match(TokenType.GetOpenWindowTitle))
+            {
+                MakeEmptyExpression();
+                return new GetOpenWindowTitleExpression();
+            }
             else
+            {
                 throw new ParserException($"Unable to parse expression: {Peek()}");
+            }
         }
 
         #region Helpers

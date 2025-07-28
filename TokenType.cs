@@ -24,6 +24,7 @@ namespace EasyAutoScript
 
         // Expressions
         GetForegroundWindow,
+        GetOpenWindowTitle,
 
         // End Of File
         EOF,
