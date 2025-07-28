@@ -108,6 +108,11 @@ namespace EasyAutoScript
                 string name = Convert.ToString(Advance().Lexeme);
                 return new IdentifierExpression(name);
             }
+            else if (Match(TokenType.GetForegroundWindow))
+            {
+                MakeEmptyExpression();
+                return new GetForegroundWindowExpression();
+            }
             else
                 throw new ParserException($"Unable to parse expression: {Peek()}");
         }
