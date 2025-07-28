@@ -10,14 +10,20 @@ namespace EasyAutoScript
         private int _line = 1;
         private Dictionary<string, TokenType> _identifiers = new()
         {
+            // Values
             { "true", TokenType.Boolean},
             { "false", TokenType.Boolean },
 
+            // Data holders
             { "var", TokenType.Var },
 
+            // Statements
             { "Clear", TokenType.Clear },
             { "Sleep", TokenType.Sleep },
             { "Write", TokenType.Write },
+
+            // Expressions
+            { "GetForegroundWindow", TokenType.GetForegroundWindow },
         };
 
         public List<Token> Tokenise()
