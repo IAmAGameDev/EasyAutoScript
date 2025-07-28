@@ -22,6 +22,9 @@ namespace EasyAutoScript
 
         Var,
 
+        // Expressions
+        GetForegroundWindow,
+
         // End Of File
         EOF,
     }

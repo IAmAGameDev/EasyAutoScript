@@ -59,10 +59,15 @@ namespace EasyAutoScript
                     return numberLiteralExpression.value;
                 case StringLiteralExpression stringLiteralExpression:
                     return stringLiteralExpression.value;
+
                 case IdentifierExpression identifierExpression:
                     _variableNamesAndValues.TryGetValue(identifierExpression.name, out object? value);
                     if (value != null) { return value; }
                     else throw new InterpreterException($"Unable to Interpret Identifier: {expression}");
+
+                case GetForegroundWindowExpression:
+                    return GetForegroundWindowExpression.Evaluate();
+
                 default:
                     throw new InterpreterException($"Unable to Interpret: {expression}");
             }
