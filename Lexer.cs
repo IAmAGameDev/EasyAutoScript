@@ -19,6 +19,7 @@ namespace EasyAutoScript
 
             // Statements
             { "Clear", TokenType.Clear },
+            { "SetForegroundWindow", TokenType.SetForegroundWindow },
             { "Sleep", TokenType.Sleep },
             { "Write", TokenType.Write },
 

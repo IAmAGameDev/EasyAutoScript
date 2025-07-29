@@ -16,33 +16,55 @@ namespace EasyAutoScript
                 switch (statement)
                 {
                     case ClearStatement:
-                        ClearStatementHandler.Execute();
-                        break;
-
-                    case SleepStatement sleepStatement:
-                        object value = EvaluateExpression(sleepStatement.expression);
-                        if (value is double)
                         {
-                            SleepStatementHandler sleepStatementHandler = new(Convert.ToDouble(value));
-                            await sleepStatementHandler.Execute();
+                            ClearStatementHandler.Execute();
                             break;
                         }
-                        throw new InterpreterException($"Expected a 'double' sleep duration but recieved at: {value.GetType()}");
+
+                    case SetForegroundWindowStatement setForegroundWindowStatement:
+                        {
+                            object value = EvaluateExpression(setForegroundWindowStatement.expression);
+                            if (value is double)
+                            {
+                                SetForegroundWindowStatementHandler setForegroundWindowStatementHandler = new(Convert.ToInt32(value));
+                                setForegroundWindowStatementHandler.Execute();
+                                break;
+                            }
+                            throw new InterpreterException($"Expected a 'double' IntPtr hWnd but recieved a: {value.GetType()}");
+                        }
+
+                    case SleepStatement sleepStatement:
+                        {
+                            object value = EvaluateExpression(sleepStatement.expression);
+                            if (value is double)
+                            {
+                                SleepStatementHandler sleepStatementHandler = new(Convert.ToDouble(value));
+                                await sleepStatementHandler.Execute();
+                                break;
+                            }
+                            throw new InterpreterException($"Expected a 'double' sleep duration but recieved a: {value.GetType()}");
+                        }
 
                     case WriteStatement writeStatement:
-                        WriteStatementHandler writeStatementHandler = new(EvaluateExpression(writeStatement.expression));
-                        writeStatementHandler.Execute();
-                        break;
+                        {
+                            WriteStatementHandler writeStatementHandler = new(EvaluateExpression(writeStatement.expression));
+                            writeStatementHandler.Execute();
+                            break;
+                        }
 
-
+                    // Vars
                     case VarAssignStatement varAssignStatement:
-                        _variableNamesAndValues[varAssignStatement.name] = EvaluateExpression(varAssignStatement.expression);
-                        break;
+                        {
+                            _variableNamesAndValues[varAssignStatement.name] = EvaluateExpression(varAssignStatement.expression);
+                            break;
+                        }
                     case VarStatement varStatement:
-                        _variableNamesAndValues.Add(varStatement.name, EvaluateExpression(varStatement.expression));
-                        break;
+                        {
+                            _variableNamesAndValues.Add(varStatement.name, EvaluateExpression(varStatement.expression));
+                            break;
+                        }
 
-
+                    // Error
                     default:
                         throw new InterpreterException($"Unable to Interpret: {statement}");
                 }
