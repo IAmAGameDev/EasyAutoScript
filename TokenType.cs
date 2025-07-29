@@ -10,6 +10,7 @@ namespace EasyAutoScript
         // Parenthesis / Equals / ExclamationMark
         OpenParenthesis,
         CloseParenthesis,
+        Comma,
         Comment,
         Equals,
         ExclamationMark,
@@ -23,6 +24,7 @@ namespace EasyAutoScript
         Var,
 
         // Expressions
+        GetAllOpenWindowTitles,
         GetForegroundWindow,
         GetOpenWindowTitle,
 

@@ -4,6 +4,14 @@ namespace EasyAutoScript.Components
     {
         public void Execute()
         {
+            if (value is Array array)
+            {
+                foreach (var item in array)
+                {
+                    Console.WriteLine(item);
+                }
+                return;
+            }
             Console.WriteLine(value);
         }
     }

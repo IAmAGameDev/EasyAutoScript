@@ -15,7 +15,7 @@ This repository contains the code for a educational new coding language I create
 - [x] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
 - [x] Create a BooleanLiteralExpression to handle booleans
-- [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
+- [x] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
 - [x] GetOpenWindowTitle()
 - [x] GetForeground Application - Console Logs HWND
 - [ ] Handle line comments // or ; or something
@@ -55,6 +55,11 @@ As this project is so small here is the current list of commands that is accepte
   - `[in]` None.
   - `[out]` `console` text cleared.
 
+- `GetAllOpenWindowTitles(optional boolean)`
+
+  - `[in]` Optional `boolean` to display hidden windows overlays.
+  - `[out]` `string array` storable into a var or can be used in Write().
+
 - `GetForegroundWindow()`
 
   - `[in]` None.
@@ -65,12 +70,12 @@ As this project is so small here is the current list of commands that is accepte
   - `[in]` None.
   - `[out]` `string` value of what the currently active window title is.
 
-- `Sleep(value)`
+- `Sleep(number)`
 
   - `[in]` `number` value.
   - `[out]` Delay before the rest of the code execution.
 
-- `Write(value)`
+- `Write(boolean/number/string)`
 
   - `[in]` `boolean/number/string` value.
   - `[out]` Inputted message displayed displayed to `console`.
