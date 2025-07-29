@@ -1,5 +1,1 @@
-// are Arrays supported?
-var x = GetAllOpenWindowTitles()
-Write(GetAllOpenWindowTitles(true))
-Write("")
-Write(x)
+SetForegroundWindow()

@@ -25,6 +25,8 @@ namespace EasyAutoScript
         {
             if (Match(TokenType.Clear))
                 return MakeClearStatement();
+            if (Match(TokenType.SetForegroundWindow))
+                return MakeSetForegroundWindow();
             else if (Match(TokenType.Sleep))
                 return MakeSleepStatement();
             else if (Match(TokenType.Write))
@@ -44,17 +46,21 @@ namespace EasyAutoScript
             return new ClearStatement();
         }
 
+        private SetForegroundWindowStatement MakeSetForegroundWindow()
+        {
+            IExpression[] expressions = MakeInputExpressions(1);
+            return new SetForegroundWindowStatement(expressions[0]);
+        }
+
         private SleepStatement MakeSleepStatement()
         {
             IExpression[] expressions = MakeInputExpressions(1);
-            Console.WriteLine(expressions[0]);
             return new SleepStatement(expressions[0]);
         }
 
         private WriteStatement MakeWriteStatement()
         {
             IExpression[] expressions = MakeInputExpressions(1);
-            Console.WriteLine(expressions[0]);
             return new WriteStatement(expressions[0]);
         }
         #endregion
@@ -84,23 +90,23 @@ namespace EasyAutoScript
         private IExpression[] MakeInputExpressions(int expectedInputs)
         {
             Consume(TokenType.OpenParenthesis, $"Expected a: '(' but recieved: {Peek().Lexeme}");
+
             IExpression[] expressions = new IExpression[expectedInputs];
-            if (Check(TokenType.CloseParenthesis))
-            {
-                Advance();
-                return expressions;
-            }
             expressions[0] = ParseExpression();
+
             for (int i = 1; i < expectedInputs; i++)
             {
                 Consume(TokenType.Comma, $"Expected a: ',' but recieved: {Peek().Lexeme}");
                 expressions[i] = ParseExpression();
             }
+
             Consume(TokenType.CloseParenthesis, $"Expected a: ')' but recieved: {Peek().Lexeme}");
+
             if (expressions.Length != expectedInputs)
             {
-                throw new ParserException($"Expected {expectedInputs} input but recieved {expressions.Length} variables");
+                throw new ParserException($"Expected {expectedInputs} input(s) but recieved {expressions.Length} variables");
             }
+
             return expressions;
         }
         #endregion
@@ -140,12 +146,12 @@ namespace EasyAutoScript
             }
             else if (Match(TokenType.GetAllOpenWindowTitles))
             {
-                IExpression[] expression = MakeInputExpressions(1);
-                if (expression[0] is BooleanLiteralExpression booleanLiteralExpression)
+                IExpression[] expressions = MakeInputExpressions(1);
+                if (expressions[0] is BooleanLiteralExpression booleanLiteralExpression)
                 {
                     return new GetAllOpenWindowTitlesExpression(booleanLiteralExpression.value);
                 }
-                else if (expression[0] == null)
+                else if (expressions[0] == null)
                 {
                     return new GetAllOpenWindowTitlesExpression(false);
                 }
@@ -188,6 +194,15 @@ namespace EasyAutoScript
             return false;
         }
 
+        /// <summary>
+        /// Is this token of this type?
+        /// </summary>
+        /// <param name="Type"></param> The type we are checking against a Peek()
+        /// <returns></returns> Yes the token matches the Peek()
+        private bool Check(List<TokenType> Type)
+        {
+            return Type.Contains(Peek().Type);
+        }
         /// <summary>
         /// Is this token of this type?
         /// </summary>
