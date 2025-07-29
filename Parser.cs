@@ -46,13 +46,18 @@ namespace EasyAutoScript
 
         private SleepStatement MakeSleepStatement()
         {
-            return new SleepStatement(MakeSingleInputExpression());
+            IExpression[] expressions = MakeInputExpressions(1);
+            Console.WriteLine(expressions[0]);
+            return new SleepStatement(expressions[0]);
         }
 
         private WriteStatement MakeWriteStatement()
         {
-            return new WriteStatement(MakeSingleInputExpression());
+            IExpression[] expressions = MakeInputExpressions(1);
+            Console.WriteLine(expressions[0]);
+            return new WriteStatement(expressions[0]);
         }
+        #endregion
 
         #region VarStatements
         private VarStatement MakeVarStatement()
@@ -69,7 +74,6 @@ namespace EasyAutoScript
             return new VarAssignStatement(name, ParseExpression());
         }
         #endregion
-        #endregion
 
         #region Expressions
         private void MakeEmptyExpression()
@@ -77,15 +81,31 @@ namespace EasyAutoScript
             Consume(TokenType.OpenParenthesis, $"Expected a: '(' but recieved: {Peek().Lexeme}");
             Consume(TokenType.CloseParenthesis, $"Expected a: ')' but recieved: {Peek().Lexeme}");
         }
-        private IExpression MakeSingleInputExpression()
+        private IExpression[] MakeInputExpressions(int expectedInputs)
         {
             Consume(TokenType.OpenParenthesis, $"Expected a: '(' but recieved: {Peek().Lexeme}");
-            IExpression expression = ParseExpression();
+            IExpression[] expressions = new IExpression[expectedInputs];
+            if (Check(TokenType.CloseParenthesis))
+            {
+                Advance();
+                return expressions;
+            }
+            expressions[0] = ParseExpression();
+            for (int i = 1; i < expectedInputs; i++)
+            {
+                Consume(TokenType.Comma, $"Expected a: ',' but recieved: {Peek().Lexeme}");
+                expressions[i] = ParseExpression();
+            }
             Consume(TokenType.CloseParenthesis, $"Expected a: ')' but recieved: {Peek().Lexeme}");
-            return expression;
+            if (expressions.Length != expectedInputs)
+            {
+                throw new ParserException($"Expected {expectedInputs} input but recieved {expressions.Length} variables");
+            }
+            return expressions;
         }
         #endregion
 
+        #region ParseExpression
         private IExpression ParseExpression()
         {
             if (Check(TokenType.Boolean))
@@ -118,11 +138,25 @@ namespace EasyAutoScript
                 MakeEmptyExpression();
                 return new GetOpenWindowTitleExpression();
             }
+            else if (Match(TokenType.GetAllOpenWindowTitles))
+            {
+                IExpression[] expression = MakeInputExpressions(1);
+                if (expression[0] is BooleanLiteralExpression booleanLiteralExpression)
+                {
+                    return new GetAllOpenWindowTitlesExpression(booleanLiteralExpression.value);
+                }
+                else if (expression[0] == null)
+                {
+                    return new GetAllOpenWindowTitlesExpression(false);
+                }
+                throw new ParserException($"Expected a: 'boolean' but recieved: {Peek().Lexeme}");
+            }
             else
             {
                 throw new ParserException($"Unable to parse expression: {Peek()}");
             }
         }
+        #endregion
 
         #region Helpers
         /// <summary>

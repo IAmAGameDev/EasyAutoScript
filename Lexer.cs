@@ -25,6 +25,7 @@ namespace EasyAutoScript
             // Expressions
             { "GetForegroundWindow", TokenType.GetForegroundWindow },
             { "GetOpenWindowTitle", TokenType.GetOpenWindowTitle },
+            { "GetAllOpenWindowTitles", TokenType.GetAllOpenWindowTitles },
         };
 
         public List<Token> Tokenise()
