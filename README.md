@@ -18,8 +18,8 @@ This repository contains the code for a educational new coding language I create
 - [x] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
 - [x] GetOpenWindowTitle()
 - [x] GetForeground Application - Console Logs HWND
-- [ ] Handle line comments // or ; or something
-- [ ] SetForeground Application - Sets the Foreground Application Based on HWND
+- [x] Handle line comments // or ; or something
+- [x] SetForeground Application - Sets the Foreground Application Based on HWND
 - [ ] Get mouse position function (with flag of relative to HWND (ScreenToClient)).
 - [ ] Move mouse position function.
 - [ ] Send mouse click.
@@ -69,6 +69,11 @@ As this project is so small here is the current list of commands that is accepte
 
   - `[in]` None.
   - `[out]` `string` value of what the currently active window title is.
+
+- `SetForegroundWindow(number)`
+
+  - `[in]` `number` value.
+  - `[out]` The application sets the Windows foreground window to number.
 
 - `Sleep(number)`
 

@@ -14,10 +14,11 @@ namespace EasyAutoScript
         Comment,
         Equals,
         ExclamationMark,
-        // Statements / Identifiers / Keywords
+        // Identifiers / Statements / Keywords
         Identifier,
 
         Clear,
+        SetForegroundWindow,
         Sleep,
         Write,
 

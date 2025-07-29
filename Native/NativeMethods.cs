@@ -24,12 +24,16 @@ namespace EasyAutoScript.Native
         [return: MarshalAs(UnmanagedType.Bool)]
         private static partial bool IsWindowVisible(IntPtr hWnd);
 
+        [LibraryImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool SetForegroundWindow(IntPtr hWnd);
+
         public static IntPtr GetForegroundWindowPtr()
         {
             return GetForegroundWindow();
         }
 
-        internal static string GetOpenWindowTitle()
+        public static string GetOpenWindowTitle()
         {
             IntPtr hWnd = GetForegroundWindow();
             int windowLength = GetWindowTextLengthW(hWnd);
@@ -42,7 +46,7 @@ namespace EasyAutoScript.Native
             return new string(buffer, 0, chars);
         }
 
-        internal static string[] GetAllOpenWindowTitles(bool displayHidden)
+        public static string[] GetAllOpenWindowTitles(bool displayHidden)
         {
             List<string> windows = [];
             List<string> hiddenWindows =
@@ -78,6 +82,11 @@ namespace EasyAutoScript.Native
                 return true;
             }, IntPtr.Zero);
             return [.. windows];
+        }
+
+        internal static void SetForegroundWindowFromPtr(IntPtr value)
+        {
+            SetForegroundWindow(value);
         }
     }
 }
