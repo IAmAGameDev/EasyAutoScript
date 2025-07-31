@@ -91,23 +91,23 @@ namespace EasyAutoScript
         {
             Consume(TokenType.OpenParenthesis, $"Expected a: '(' but recieved: {Peek().Lexeme}");
 
-            IExpression[] expressions = new IExpression[expectedInputs];
-            expressions[0] = ParseExpression();
+            List<IExpression> expressions = [];
+            expressions.Add(ParseExpression());
 
-            for (int i = 1; i < expectedInputs; i++)
+            while (!Check(TokenType.CloseParenthesis) && !IsAtEnd())
             {
                 Consume(TokenType.Comma, $"Expected a: ',' but recieved: {Peek().Lexeme}");
-                expressions[i] = ParseExpression();
+                expressions.Add(ParseExpression());
             }
 
             Consume(TokenType.CloseParenthesis, $"Expected a: ')' but recieved: {Peek().Lexeme}");
 
-            if (expressions.Length != expectedInputs)
+            if (expressions.Count != expectedInputs)
             {
-                throw new ParserException($"Expected {expectedInputs} input(s) but recieved {expressions.Length} variables");
+                throw new ParserException($"Expected {expectedInputs} input(s) but recieved {expressions.Count} variables, on line: {_tokens[_current].Line}");
             }
 
-            return expressions;
+            return [.. expressions];
         }
         #endregion
 
@@ -146,16 +146,21 @@ namespace EasyAutoScript
             }
             else if (Match(TokenType.GetAllOpenWindowTitles))
             {
-                IExpression[] expressions = MakeInputExpressions(1);
-                if (expressions[0] is BooleanLiteralExpression booleanLiteralExpression)
+                if (PeekNext().Type != TokenType.CloseParenthesis)
                 {
-                    return new GetAllOpenWindowTitlesExpression(booleanLiteralExpression.value);
+                    IExpression[] expressions = MakeInputExpressions(1);
+                    if (expressions[0] is BooleanLiteralExpression booleanLiteralExpression)
+                    {
+                        return new GetAllOpenWindowTitlesExpression(booleanLiteralExpression.value);
+                    }
+                    else if (expressions[0] == null)
+                    {
+                        return new GetAllOpenWindowTitlesExpression(false);
+                    }
+                    throw new ParserException($"Expected a: 'boolean' but recieved: {Peek().Lexeme}");
                 }
-                else if (expressions[0] == null)
-                {
-                    return new GetAllOpenWindowTitlesExpression(false);
-                }
-                throw new ParserException($"Expected a: 'boolean' but recieved: {Peek().Lexeme}");
+                MakeEmptyExpression();
+                return new GetAllOpenWindowTitlesExpression(false);
             }
             else
             {

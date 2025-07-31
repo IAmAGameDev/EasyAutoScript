@@ -1,15 +1,12 @@
-using EasyAutoScript.Native;
-using EasyAutoScript.Statements;
-
 namespace EasyAutoScript.Expressions
 {
     public class GetAllOpenWindowTitlesExpression(bool displayHidden) : IExpression
     {
         public readonly bool displayHidden = displayHidden;
 
-        public string[] Evaluate()
+        public object Accept(IExpressionVisitor visitor)
         {
-            return NativeMethods.GetAllOpenWindowTitles(displayHidden);
+            return visitor.VisitGetAllOpenWindowTitlesExpression(this);
         }
     }
 }

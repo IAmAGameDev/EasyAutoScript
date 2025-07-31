@@ -20,6 +20,7 @@ This repository contains the code for a educational new coding language I create
 - [x] GetForeground Application - Console Logs HWND
 - [x] Handle line comments // or ; or something
 - [x] SetForeground Application - Sets the Foreground Application Based on HWND
+- [x] Added a visitor pattern for the IExpressions
 - [ ] Get mouse position function (with flag of relative to HWND (ScreenToClient)).
 - [ ] Move mouse position function.
 - [ ] Send mouse click.
