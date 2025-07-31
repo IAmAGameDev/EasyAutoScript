@@ -1,4 +1,7 @@
-namespace EasyAutoScript.Statements
+namespace EasyAutoScript.Expressions
 {
-    public interface IExpression { }
+    public interface IExpression
+    {
+        public object Accept(IExpressionVisitor visitor);
+    }
 }

@@ -1,13 +1,12 @@
 using EasyAutoScript.Native;
-using EasyAutoScript.Statements;
 
 namespace EasyAutoScript.Expressions
 {
     public class GetForegroundWindowExpression() : IExpression
     {
-        public static IntPtr Evaluate()
+        public object Accept(IExpressionVisitor visitor)
         {
-            return NativeMethods.GetForegroundWindowPtr();
+            return visitor.VisitGetForegroundWindowExpression(this);
         }
     }
 }
