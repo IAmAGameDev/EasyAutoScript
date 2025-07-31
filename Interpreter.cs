@@ -5,13 +5,21 @@ using EasyAutoScript.Statements;
 
 namespace EasyAutoScript
 {
-    public class Interpreter(List<IStatement> statements)
+    public class Interpreter
     {
-        private Dictionary<string, object> _variableNamesAndValues = [];
+        private readonly Dictionary<string, object> _variableNamesAndValues = [];
+        private readonly ExpressionEvaluator _expressionEvaluator;
+        private readonly List<IStatement> _statements;
+
+        public Interpreter(List<IStatement> statements)
+        {
+            _expressionEvaluator = new(_variableNamesAndValues);
+            _statements = statements;
+        }
 
         public async Task Interpret()
         {
-            foreach (IStatement statement in statements)
+            foreach (IStatement statement in _statements)
             {
                 switch (statement)
                 {
@@ -23,7 +31,7 @@ namespace EasyAutoScript
 
                     case SetForegroundWindowStatement setForegroundWindowStatement:
                         {
-                            object value = EvaluateExpression(setForegroundWindowStatement.expression);
+                            object value = _expressionEvaluator.Evaluate(setForegroundWindowStatement.expression);
                             if (value is double)
                             {
                                 SetForegroundWindowStatementHandler setForegroundWindowStatementHandler = new(Convert.ToInt32(value));
@@ -35,7 +43,7 @@ namespace EasyAutoScript
 
                     case SleepStatement sleepStatement:
                         {
-                            object value = EvaluateExpression(sleepStatement.expression);
+                            object value = _expressionEvaluator.Evaluate(sleepStatement.expression);
                             if (value is double)
                             {
                                 SleepStatementHandler sleepStatementHandler = new(Convert.ToDouble(value));
@@ -47,7 +55,7 @@ namespace EasyAutoScript
 
                     case WriteStatement writeStatement:
                         {
-                            WriteStatementHandler writeStatementHandler = new(EvaluateExpression(writeStatement.expression));
+                            WriteStatementHandler writeStatementHandler = new(_expressionEvaluator.Evaluate(writeStatement.expression));
                             writeStatementHandler.Execute();
                             break;
                         }
@@ -55,12 +63,12 @@ namespace EasyAutoScript
                     // Vars
                     case VarAssignStatement varAssignStatement:
                         {
-                            _variableNamesAndValues[varAssignStatement.name] = EvaluateExpression(varAssignStatement.expression);
+                            _variableNamesAndValues[varAssignStatement.name] = _expressionEvaluator.Evaluate(varAssignStatement.expression);
                             break;
                         }
                     case VarStatement varStatement:
                         {
-                            _variableNamesAndValues.Add(varStatement.name, EvaluateExpression(varStatement.expression));
+                            _variableNamesAndValues.Add(varStatement.name, _expressionEvaluator.Evaluate(varStatement.expression));
                             break;
                         }
 
@@ -68,34 +76,6 @@ namespace EasyAutoScript
                     default:
                         throw new InterpreterException($"Unable to Interpret: {statement}");
                 }
-            }
-        }
-
-        public object EvaluateExpression(IExpression expression)
-        {
-            switch (expression)
-            {
-                case BooleanLiteralExpression booleanLiteralExpression:
-                    return booleanLiteralExpression.value;
-                case NumberLiteralExpression numberLiteralExpression:
-                    return numberLiteralExpression.value;
-                case StringLiteralExpression stringLiteralExpression:
-                    return stringLiteralExpression.value;
-
-                case IdentifierExpression identifierExpression:
-                    _variableNamesAndValues.TryGetValue(identifierExpression.name, out object? value);
-                    if (value != null) { return value; }
-                    else throw new InterpreterException($"Unable to Interpret Identifier: {expression}");
-
-                case GetForegroundWindowExpression:
-                    return GetForegroundWindowExpression.Evaluate();
-                case GetOpenWindowTitleExpression:
-                    return GetOpenWindowTitleExpression.Evaluate();
-                case GetAllOpenWindowTitlesExpression getAllOpenWindowTitlesExpression:
-                    return getAllOpenWindowTitlesExpression.Evaluate(); // TODO change this from hard coded false
-
-                default:
-                    throw new InterpreterException($"Unable to Interpret: {expression}");
             }
         }
     }

@@ -57,6 +57,10 @@ namespace EasyAutoScript
                 case '!':
                     AddToken(TokenType.ExclamationMark, "!");
                     break;
+                case ',':
+                    AddToken(TokenType.Comma, ",");
+                    break;
+
                 case '/':
                     Comment();
                     break;

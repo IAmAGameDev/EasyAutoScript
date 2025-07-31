@@ -1,3 +1,5 @@
+using EasyAutoScript.Expressions;
+
 namespace EasyAutoScript.Statements
 {
     public class WriteStatement(IExpression expression) : IStatement

@@ -1,1 +1,16 @@
-SetForegroundWindow()
+var x = true
+Write(x)
+x = "ABC"
+Write(x)
+x = 123
+Write(x)
+x = GetAllOpenWindowTitles()
+Write(x)
+Write(" ")
+Write(GetAllOpenWindowTitles(true))
+x = GetForegroundWindow()
+Write(" ")
+Write(x)
+Write(" ")
+x = GetOpenWindowTitle()
+Write(x)

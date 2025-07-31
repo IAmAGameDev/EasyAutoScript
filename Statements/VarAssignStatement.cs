@@ -1,3 +1,5 @@
+using EasyAutoScript.Expressions;
+
 namespace EasyAutoScript.Statements
 {
     public class VarAssignStatement(string name, IExpression expression) : IStatement
