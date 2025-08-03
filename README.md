@@ -10,17 +10,17 @@ This repository contains the code for a educational new coding language I create
 
 `Features`:
 
-- [x] Sleep()
-- [x] Create a new CustomExceptions for easier debugging
-- [x] Add !true and !false handling
+- [ ] Sleep()
+- [ ] Create a new CustomExceptions for easier debugging
+- [ ] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
-- [x] Create a BooleanLiteralExpression to handle booleans
-- [x] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
-- [x] GetOpenWindowTitle()
-- [x] GetForeground Application - Console Logs HWND
-- [x] Handle line comments // or ; or something
-- [x] SetForeground Application - Sets the Foreground Application Based on HWND
-- [x] Added a visitor pattern for the IExpressions
+- [ ] Create a BooleanLiteralExpression to handle booleans
+- [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
+- [ ] GetOpenWindowTitle()
+- [ ] GetForeground Application - Console Logs HWND
+- [ ] Handle line comments // or ; or something
+- [ ] SetForeground Application - Sets the Foreground Application Based on HWND
+- [ ] Added a visitor pattern for the IExpressions
 - [ ] Get mouse position function (with flag of relative to HWND (ScreenToClient)).
 - [ ] Move mouse position function.
 - [ ] Send mouse click.
