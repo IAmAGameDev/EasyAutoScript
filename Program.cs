@@ -1,4 +1,6 @@
-﻿namespace EasyAutoScript
+﻿using EasyAutoScript.Statements;
+
+namespace EasyAutoScript
 {
 	class Program
 	{
@@ -10,7 +12,34 @@
 
 			Console.WriteLine("Parsing Tokens\n");
 
+			Lexer lexer = new(code);
+			List<Token> tokens = lexer.Tokenise();
+
+			if (debugMode)
+			{
+				foreach (var token in tokens)
+				{
+					Console.WriteLine(token);
+				}
+				Console.WriteLine();
+			}
+
+			Parser parser = new(tokens);
+			List<IStatement> statements = parser.ParseTokens();
+
+			if (debugMode)
+			{
+				foreach (var statement in statements)
+				{
+					Console.WriteLine(statement);
+				}
+				Console.WriteLine();
+			}
+
 			Console.WriteLine("Finished Parsing, Executing Program:\n");
+
+			Interpreter interpreter = new(statements);
+			await interpreter.Interpret();
 
 			await Task.CompletedTask;
 		}
