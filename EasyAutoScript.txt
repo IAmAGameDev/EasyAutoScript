@@ -1,3 +1,5 @@
 Write("Hello")
 Sleep(1000)
 Write(500)
+Sleep(1250)
+Write(true)
