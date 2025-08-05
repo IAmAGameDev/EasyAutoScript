@@ -70,7 +70,7 @@ namespace EasyAutoScript
                         }
 
                         // Error
-                        throw new Exception($"Unknown character entered: {c} on line: {_line}");
+                        throw new LexerException($"Unknown character entered: {c} on line: {_line}");
                 }
             }
 
