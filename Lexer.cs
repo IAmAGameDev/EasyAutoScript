@@ -131,6 +131,11 @@ namespace EasyAutoScript
 
             if (identifiers.TryGetValue(identifier, out TokenType type))
             {
+                if (type == TokenType.Boolean)
+                {
+                    AddToken(type, identifier, Convert.ToBoolean(identifier));
+                    return;
+                }
                 AddToken(type, identifier);
                 return;
             }
