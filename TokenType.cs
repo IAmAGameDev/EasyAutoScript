@@ -5,6 +5,9 @@ namespace EasyAutoScript
         OpenParenthesis,
         CloseParenthesis,
 
+        ForwardSlash,
+
+        // Identifier
         Identifier,
 
         // Values
