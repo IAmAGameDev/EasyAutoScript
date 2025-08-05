@@ -10,10 +10,8 @@ This repository contains the code for a educational new coding language I create
 
 `Features`:
 
-- [ ] Create a new CustomExceptions for easier debugging
 - [ ] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
-- [ ] Create a BooleanLiteralExpression to handle booleans
 - [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
 - [ ] GetOpenWindowTitle()
 - [ ] GetForeground Application - Console Logs HWND
@@ -55,26 +53,6 @@ As this project is so small here is the current list of commands that is accepte
   - `[in]` None.
   - `[out]` `console` text cleared.
 
-- `GetAllOpenWindowTitles(optional boolean)`
-
-  - `[in]` Optional `boolean` to display hidden windows overlays.
-  - `[out]` `string array` storable into a var or can be used in Write().
-
-- `GetForegroundWindow()`
-
-  - `[in]` None.
-  - `[out]` `IntPtr` value of the currently active ForegroundWindow at the time of running this code.
-
-- `GetOpenWindowTitle()`
-
-  - `[in]` None.
-  - `[out]` `string` value of what the currently active window title is.
-
-- `SetForegroundWindow(number)`
-
-  - `[in]` `number` value.
-  - `[out]` The application sets the Windows foreground window to number.
-
 - `Sleep(number)`
 
   - `[in]` `number` value.
@@ -85,7 +63,7 @@ As this project is so small here is the current list of commands that is accepte
   - `[in]` `boolean/number/string` value.
   - `[out]` Inputted message displayed displayed to `console`.
 
-- `Var`
+- `Var` `-` `Work In Progress`
   - `var name = value`
     - `[in]` `string` name and `boolean/number/string` value.
     - `[out]` `value` stored in variable `name`.

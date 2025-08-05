@@ -43,7 +43,7 @@ namespace EasyAutoScript
             }
             else
             {
-                throw new Exception($"END: {tokens[_current]}");
+                throw new ParserException($"END: {tokens[_current]}");
             }
         }
 
@@ -75,7 +75,7 @@ namespace EasyAutoScript
                 TokenType.Boolean => new BooleanLiteralExpression(Convert.ToBoolean(token.Literal)),
                 TokenType.Number => new NumberLiteralExpression(Convert.ToDouble(token.Literal)),
                 TokenType.String => new StringLiteralExpression(Convert.ToString(token.Literal) ?? string.Empty),
-                _ => throw new Exception($"Unexpected token recieved expected a value recieved: {token}")
+                _ => throw new ParserException($"Unexpected token recieved expected a value recieved: {token}")
             };
         }
 
@@ -91,7 +91,7 @@ namespace EasyAutoScript
                 Advance();
                 return;
             }
-            throw new Exception(message);
+            throw new ParserException(message);
         }
 
         /// <summary>

@@ -1,7 +1,4 @@
-Write("Hello")
-Sleep(1000)
-Write(500)
-Sleep(1250)
-// Hello World
-Write(true)
-Clear()
+var x = "123"
+Write(x)
+x = true
+Write(x)

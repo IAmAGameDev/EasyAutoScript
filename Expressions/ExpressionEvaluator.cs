@@ -17,7 +17,7 @@ namespace EasyAutoScript.Expressions
             }
             else
             {
-                throw new Exception($"Expected a Number but recieved a: {value.GetType()}");
+                throw new EvaluatorException($"Expected a Number but recieved a: {value.GetType()}");
             }
         }
         #endregion

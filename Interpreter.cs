@@ -31,7 +31,7 @@ namespace EasyAutoScript
                         break;
 
                     default:
-                        throw new Exception($"Unhandled statement: {statement}");
+                        throw new InterpreterException($"Unhandled statement: {statement}");
                 }
             }
         }
