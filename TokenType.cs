@@ -7,6 +7,8 @@ namespace EasyAutoScript
 
         ForwardSlash,
 
+        Comma,
+
         // Identifier
         Identifier,
 
@@ -16,6 +18,7 @@ namespace EasyAutoScript
         String,
 
         // Statements
+        Clear,
         Sleep,
         Write,
 

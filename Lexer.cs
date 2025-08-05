@@ -9,6 +9,7 @@ namespace EasyAutoScript
 
         private readonly Dictionary<string, TokenType> identifiers = new()
         {
+            { "Clear", TokenType.Clear },
             { "Sleep", TokenType.Sleep },
             { "Write", TokenType.Write },
 

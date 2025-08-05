@@ -28,24 +28,37 @@ namespace EasyAutoScript
         /// <exception cref="Exception"></exception> Throws an error if encountering a unexprected Token
         private IStatement ScanToken()
         {
-            if (Match(TokenType.Sleep))
+            if (Match(TokenType.Clear))
             {
-                Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
-                IExpression expression = ParseExpression();
-                Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
-                return new SleepStatement(expression);
+                ParseEmptyExpression();
+                return new ClearStatement();
+            }
+            else if (Match(TokenType.Sleep))
+            {
+                return new SleepStatement(ParseVariableExpression());
             }
             else if (Match(TokenType.Write))
             {
-                Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
-                IExpression expression = ParseExpression();
-                Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
-                return new WriteStatement(expression);
+                return new WriteStatement(ParseVariableExpression());
             }
             else
             {
                 throw new Exception($"END: {tokens[_current]}");
             }
+        }
+
+        private void ParseEmptyExpression()
+        {
+            Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
+            Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+        }
+
+        private IExpression ParseVariableExpression()
+        {
+            Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
+            IExpression expression = ParseExpression();
+            Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+            return expression;
         }
 
         /// <summary>

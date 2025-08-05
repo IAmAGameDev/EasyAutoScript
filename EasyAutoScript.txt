@@ -4,3 +4,4 @@ Write(500)
 Sleep(1250)
 // Hello World
 Write(true)
+Clear()

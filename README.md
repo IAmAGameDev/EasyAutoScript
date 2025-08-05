@@ -10,7 +10,6 @@ This repository contains the code for a educational new coding language I create
 
 `Features`:
 
-- [x] Sleep()
 - [ ] Create a new CustomExceptions for easier debugging
 - [ ] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions

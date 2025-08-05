@@ -14,6 +14,10 @@ namespace EasyAutoScript
             {
                 switch (statement)
                 {
+                    case ClearStatement:
+                        ClearStatementHandler.Execute();
+                        break;
+
                     case SleepStatement sleepStatement:
                         {
                             double value = expressionEvaluator.ConvertToDouble(sleepStatement.expression);
