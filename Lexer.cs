@@ -34,6 +34,11 @@ namespace EasyAutoScript
                         AddToken(TokenType.CloseParenthesis, ")");
                         break;
 
+                    // Comment
+                    case '/':
+                        Comment();
+                        break;
+
                     // Increase line counter
                     case '\n':
                         _line++;
@@ -69,6 +74,18 @@ namespace EasyAutoScript
             }
 
             return _tokens;
+        }
+
+        private void Comment()
+        {
+            if (Peek() == '/')
+            {
+                Advance();
+            }
+            while (!IsAtEnd() && Peek() != '\n')
+            {
+                Advance();
+            }
         }
 
         /// <summary>
