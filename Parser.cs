@@ -35,12 +35,16 @@ namespace EasyAutoScript
                     Advance();
                     ParseEmptyExpression();
                     return new ClearStatement();
+                case TokenType.MouseSetPositionRelative:
+                    Advance();
+                    List<IExpression> expressions = ParseMultiExpression(2);
+                    return new MouseSetPositionRelativeStatement(expressions[0], expressions[1]);
                 case TokenType.SetForegroundWindow:
                     Advance();
-                    return new SetForegroundWindowStatement(ParseParenthesisedExpression());
+                    return new SetForegroundWindowStatement(ParseMultiExpression(0)[0]);
                 case TokenType.Sleep:
                     Advance();
-                    return new SleepStatement(ParseParenthesisedExpression());
+                    return new SleepStatement(ParseMultiExpression(0)[0]);
                 case TokenType.Var:
                     {
                         Advance();
@@ -50,7 +54,7 @@ namespace EasyAutoScript
                     }
                 case TokenType.Write:
                     Advance();
-                    return new WriteStatement(ParseParenthesisedExpression());
+                    return new WriteStatement(ParseMultiExpression(0)[0]);
                 case TokenType.Identifier:
                     {
                         string name = Advance().Lexeme;
@@ -62,18 +66,32 @@ namespace EasyAutoScript
             }
         }
 
+        private List<IExpression> ParseMultiExpression(int expectedInputs)
+        {
+            Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
+
+            List<IExpression> expressions = [];
+            expressions.Add(ParseExpression());
+
+            while (!IsAtEnd() && Peek().Type != TokenType.CloseParenthesis)
+            {
+                Consume(TokenType.Comma, $"Expected a \",\" but recieved: {tokens[_current]}");
+                expressions.Add(ParseExpression());
+            }
+
+            if (expectedInputs != expressions.Count)
+            {
+                throw new ParserException($"Expected {expectedInputs} inputs but recieved {expressions.Count}");
+            }
+
+            Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+            return expressions;
+        }
+
         private void ParseEmptyExpression()
         {
             Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
             Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
-        }
-
-        private IExpression ParseParenthesisedExpression()
-        {
-            Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
-            IExpression expression = ParseExpression();
-            Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
-            return expression;
         }
 
         private IExpression? ParseOptionalExpression()

@@ -23,7 +23,9 @@ namespace EasyAutoScript
         GetAllOpenWindowTitles,
         GetForegroundWindow,
         GetWindowTitle,
+
         MouseGetPosition,
+        MouseSetPositionRelative,
 
         // Values
         Boolean,
