@@ -3,8 +3,6 @@ namespace EasyAutoScript.Expressions
 {
     public class ExpressionEvaluator(Dictionary<string, object> nameAndValue) : IExpressionVisitor
     {
-
-
         #region Public Helpers
         public object Evaluate(IExpression expression)
         {
@@ -84,6 +82,12 @@ namespace EasyAutoScript.Expressions
                 return value;
             }
             throw new EvaluatorException($"Unable to retrieve a stored value for: {expression.name}");
+        }
+
+        public object VisitMouseGetPositionExpression(MouseGetPositionExpression expression)
+        {
+            IExpression trueExpression = expression.expression ?? new NumberLiteralExpression(0);
+            return NativeMethods.MouseGetPosition(ConvertToIntPtr(trueExpression));
         }
 
         public object VisitNumberLiteralExpression(NumberLiteralExpression expression)

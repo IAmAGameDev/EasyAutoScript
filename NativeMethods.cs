@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace EasyAutoScript
@@ -9,6 +10,10 @@ namespace EasyAutoScript
         private static partial bool EnumWindowsImport(EnumWindowsProc enumProc, IntPtr lParam);
         public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
+        [LibraryImport("user32.dll", EntryPoint = "GetCursorPos")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool GetCursorPosImport(out POINT lpPoint);
+
         [LibraryImport("user32.dll", EntryPoint = "GetForegroundWindow")]
         private static partial IntPtr GetForegroundWindowImport();
 
@@ -18,9 +23,17 @@ namespace EasyAutoScript
         [LibraryImport("user32.dll", EntryPoint = "GetWindowTextW", StringMarshalling = StringMarshalling.Utf16)]
         private static partial int GetWindowTextWImport(IntPtr hWnd, [Out] char[] lpString, int nMaxCount);
 
+        [LibraryImport("user32.dll", EntryPoint = "IsWindow")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool IsWindowImport(IntPtr hWnd);
+
         [LibraryImport("user32.dll", EntryPoint = "IsWindowVisible")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static partial bool IsWindowVisibleImport(IntPtr hWnd);
+
+        [LibraryImport("user32.dll", EntryPoint = "ScreenToClient")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
 
         [LibraryImport("user32.dll", EntryPoint = "SetForegroundWindow")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -63,7 +76,7 @@ namespace EasyAutoScript
             string windowTitle = GetWindowTitleHelper(hWnd);
             if (windowTitle == string.Empty)
             {
-                throw new Exception("Unable to find window with given IntPtr");
+                throw new InterpreterException($"Unable to find window with given IntPtr hWnd: {hWnd}");
             }
             return windowTitle;
         }
@@ -84,9 +97,35 @@ namespace EasyAutoScript
             return new string(windowTitle);
         }
 
+        public static POINT MouseGetPosition(IntPtr hWnd)
+        {
+            GetCursorPosImport(out POINT lpPoint);
+            if (hWnd != 0)
+            {
+                if (!IsWindowImport(hWnd))
+                {
+                    throw new InterpreterException($"Unable to find window with given IntPtr hWnd: {hWnd}");
+                }
+                ScreenToClient(hWnd, ref lpPoint);
+            }
+            return lpPoint;
+        }
+
         public static void SetForegroundWindow(IntPtr hWnd)
         {
             SetForegroundWindowImport(hWnd);
         }
+    }
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct POINT
+{
+    public int X;
+    public int Y;
+
+    public static implicit operator Point(POINT point)
+    {
+        return new Point(point.X, point.Y);
     }
 }

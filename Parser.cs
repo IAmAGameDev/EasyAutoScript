@@ -117,6 +117,9 @@ namespace EasyAutoScript
                 case TokenType.GetWindowTitle:
                     return new GetWindowTitleExpression(ParseOptionalExpression());
 
+                case TokenType.MouseGetPosition:
+                    return new MouseGetPositionExpression(ParseOptionalExpression());
+
                 default:
                     throw new ParserException($"Unexpected token recieved expected a value, recieved: {token}");
             }

@@ -18,6 +18,7 @@ namespace EasyAutoScript
             { "GetAllOpenWindowTitles", TokenType.GetAllOpenWindowTitles },
             { "GetForegroundWindow", TokenType.GetForegroundWindow },
             { "GetWindowTitle", TokenType.GetWindowTitle },
+            { "MouseGetPosition", TokenType.MouseGetPosition },
 
             { "true", TokenType.Boolean },
             { "false", TokenType.Boolean },

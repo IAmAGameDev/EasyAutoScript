@@ -14,6 +14,9 @@ namespace EasyAutoScript.Components
                 case IntPtr:
                     Console.WriteLine(value);
                     break;
+                case POINT point:
+                    Console.WriteLine($"X: {point.X}, Y: {point.Y}");
+                    break;
                 case IEnumerable enumerable:
                     foreach (var item in enumerable)
                     {
