@@ -1,1 +1,1 @@
-MouseSetPositionRelative(-50, 50)
+var x = "abc" b = "d"
