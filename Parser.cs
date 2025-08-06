@@ -109,6 +109,8 @@ namespace EasyAutoScript
                 case TokenType.Identifier:
                     return new IdentifierExpression(token.Lexeme);
 
+                case TokenType.GetAllOpenWindowTitles:
+                    return new GetAllOpenWindowTitlesExpression(ParseOptionalExpression());
                 case TokenType.GetForegroundWindow:
                     ParseEmptyExpression();
                     return new GetForegroundWindowExpression();
@@ -116,7 +118,7 @@ namespace EasyAutoScript
                     return new GetWindowTitleExpression(ParseOptionalExpression());
 
                 default:
-                    throw new ParserException($"Unexpected token recieved expected a value recieved: {token}");
+                    throw new ParserException($"Unexpected token recieved expected a value, recieved: {token}");
             }
         }
 

@@ -3,6 +3,7 @@ namespace EasyAutoScript.Expressions
     public interface IExpressionVisitor
     {
         public object VisitBooleanLiteralExpression(BooleanLiteralExpression expression);
+        public object VisitGetAllOpenWindowTitlesExpression(GetAllOpenWindowTitlesExpression expression);
         public object VisitGetForegroundWindowExpression(GetForegroundWindowExpression expression);
         public object VisitGetWindowTitleExpression(GetWindowTitleExpression expression);
         public object VisitIdentifierExpression(IdentifierExpression expression);
