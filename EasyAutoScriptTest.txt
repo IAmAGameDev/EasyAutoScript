@@ -1,0 +1,30 @@
+// Comment Test
+
+Clear()
+
+Write(GetAllOpenWindowTitles())
+Write(GetAllOpenWindowTitles(false))
+Write(GetAllOpenWindowTitles(true))
+
+Write(GetForegroundWindow())
+
+Write(GetWindowTitle())
+Write(GetWindowTitle(GetForegroundWindow()))
+
+Write(MouseGetPosition())
+Write(MouseGetPosition(GetForegroundWindow()))
+
+MouseSetPositionRelative(10, 10)
+
+SetForegroundWindow(GetForegroundWindow())
+
+Sleep(100)
+
+Write(true)
+Write(123)
+Write("abc")
+
+var x = "abc"
+Write(x)
+x = GetWindowTitle(GetForegroundWindow())
+Write(x)

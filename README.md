@@ -13,6 +13,8 @@ This repository contains the code for a educational new coding language I create
 - [ ] MouseSetPosition(x, y, OPTIONAL hWnd)
 - [ ] MouseFakeSetPosition(x, y, hWnd)
 
+- [ ] Add negative tests (ones I know will fail / should fail)
+
 - [ ] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
 - [ ] Send mouse click.
@@ -33,6 +35,9 @@ This repository contains the code for a educational new coding language I create
 - [ ] `HARD` While Loop
 - [ ] `HARD` Arrays
 - [ ] `HARD` ForEach Loop
+
+- [ ] Stop hard coding the file path
+- [ ] Maybe look into using .eas?
 
 ## Documentation
 
