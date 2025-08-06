@@ -1,4 +1,1 @@
-var x = MouseGetPosition()
-Write(x)
-x = MouseGetPosition(123)
-Write(x)
+MouseSetPositionRelative(-50, 50)
