@@ -1,3 +1,4 @@
+
 namespace EasyAutoScript.Expressions
 {
     public class ExpressionEvaluator(Dictionary<string, object> nameAndValue) : IExpressionVisitor
@@ -20,6 +21,23 @@ namespace EasyAutoScript.Expressions
             else
             {
                 throw new EvaluatorException($"Expected a Number but recieved a: {value.GetType()}");
+            }
+        }
+
+        public IntPtr ConvertToIntPtr(IExpression expression)
+        {
+            object value = expression.Accept(this);
+            if (value is IntPtr intPtrValue)
+            {
+                return intPtrValue;
+            }
+            else if (value is double doubleValue)
+            {
+                return (IntPtr)doubleValue;
+            }
+            else
+            {
+                throw new EvaluatorException($"Expected a IntPtr but recieved a: {value.GetType()}");
             }
         }
         #endregion
