@@ -41,10 +41,10 @@ namespace EasyAutoScript
                     return new MouseSetPositionRelativeStatement(expressions[0], expressions[1]);
                 case TokenType.SetForegroundWindow:
                     Advance();
-                    return new SetForegroundWindowStatement(ParseMultiExpression(0)[0]);
+                    return new SetForegroundWindowStatement(ParseMultiExpression(1)[0]);
                 case TokenType.Sleep:
                     Advance();
-                    return new SleepStatement(ParseMultiExpression(0)[0]);
+                    return new SleepStatement(ParseMultiExpression(1)[0]);
                 case TokenType.Var:
                     {
                         Advance();
@@ -54,7 +54,7 @@ namespace EasyAutoScript
                     }
                 case TokenType.Write:
                     Advance();
-                    return new WriteStatement(ParseMultiExpression(0)[0]);
+                    return new WriteStatement(ParseMultiExpression(1)[0]);
                 case TokenType.Identifier:
                     {
                         string name = Advance().Lexeme;

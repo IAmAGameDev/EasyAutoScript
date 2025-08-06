@@ -8,7 +8,15 @@ namespace EasyAutoScript
 
 		static async Task Main(string[] args)
 		{
-			string code = File.ReadAllText("EasyAutoScript.txt");
+			string code = string.Empty;
+			if (args.Length > 0)
+			{
+				code = File.ReadAllText("EasyAutoScriptTest.txt");
+			}
+			else
+			{
+				code = File.ReadAllText("EasyAutoScript.txt");
+			}
 
 			Console.WriteLine("Parsing Tokens\n");
 
@@ -36,7 +44,7 @@ namespace EasyAutoScript
 				Console.WriteLine();
 			}
 
-			Console.WriteLine("Finished Parsing, Executing Program:\n");
+			Console.WriteLine("\nFinished Parsing, Executing Program:\n");
 
 			Interpreter interpreter = new(statements);
 			await interpreter.Interpret();

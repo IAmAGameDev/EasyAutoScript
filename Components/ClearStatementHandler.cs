@@ -4,7 +4,14 @@ namespace EasyAutoScript.Components
     {
         public static void Execute()
         {
-            Console.Clear();
+            try
+            {
+                Console.Clear();
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Console clear operation skipped: {ex.Message}");
+            }
         }
     }
 }
