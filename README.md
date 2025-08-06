@@ -14,7 +14,6 @@ This repository contains the code for a educational new coding language I create
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
 - [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
 - [ ] GetOpenWindowTitle()
-- [ ] GetForeground Application - Console Logs HWND
 - [ ] Handle line comments // or ; or something
 - [ ] SetForeground Application - Sets the Foreground Application Based on HWND
 - [ ] Added a visitor pattern for the IExpressions
@@ -52,6 +51,11 @@ As this project is so small here is the current list of commands that is accepte
 
   - `[in]` None.
   - `[out]` `console` text cleared.
+
+- `GetForegroundWindow()`
+
+  - `[in]` None.
+  - `[out]` `IntPtr` to the currently active Window.
 
 - `Sleep(number)`
 

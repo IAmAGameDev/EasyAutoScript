@@ -12,11 +12,6 @@ namespace EasyAutoScript
         // Identifier
         Identifier,
 
-        // Values
-        Boolean,
-        Number,
-        String,
-
         // Statements
         Clear,
         Sleep,
@@ -24,5 +19,11 @@ namespace EasyAutoScript
         Write,
 
         // Expressions
+        GetForegroundWindow,
+
+        // Values
+        Boolean,
+        Number,
+        String,
     }
 }

@@ -29,6 +29,11 @@ namespace EasyAutoScript.Expressions
             return expression.value;
         }
 
+        public object VisitGetForegroundWindowExpression(GetForegroundWindowExpression expression)
+        {
+            return NativeMethods.GetForegroundWindow();
+        }
+
         public object VisitIdentifierExpression(IdentifierExpression expression)
         {
             if (nameAndValue.TryGetValue(expression.name, out object? value))
