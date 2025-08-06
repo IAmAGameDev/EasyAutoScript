@@ -1,7 +1,9 @@
 namespace EasyAutoScript.Expressions
 {
-    public class ExpressionEvaluator : IExpressionVisitor
+    public class ExpressionEvaluator(Dictionary<string, object> nameAndValue) : IExpressionVisitor
     {
+
+
         #region Public Helpers
         public object Evaluate(IExpression expression)
         {
@@ -25,6 +27,15 @@ namespace EasyAutoScript.Expressions
         public object VisitBooleanLiteralExpression(BooleanLiteralExpression expression)
         {
             return expression.value;
+        }
+
+        public object VisitIdentifierExpression(IdentifierExpression expression)
+        {
+            if (nameAndValue.TryGetValue(expression.name, out object? value))
+            {
+                return value;
+            }
+            throw new EvaluatorException($"Unable to retrieve a stored value for: {expression.name}");
         }
 
         public object VisitNumberLiteralExpression(NumberLiteralExpression expression)
