@@ -1,1 +1,4 @@
-SetForegroundWindow(855086)
+var x = GetWindowTitle()
+Write(x)
+x = GetWindowTitle(123)
+Write(x)
