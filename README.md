@@ -62,6 +62,11 @@ As this project is so small here is the current list of commands that is accepte
   - `[in]` optional `IntPtr` value.
   - `[out]` A `string` value of the current active window if no `[in]` or the window for the `IntPtr` if passed.
 
+- `MouseGetPosition(optional IntPtr)`
+
+  - `[in]` optional `IntPtr` value.
+  - `[out]` The mouse position on the screen coordinates or if a `IntPtr` was supplied it is relative to that given window.
+
 - `SetForegroundWindow(IntPtr)`
 
   - `[in]` `IntPtr` value.
