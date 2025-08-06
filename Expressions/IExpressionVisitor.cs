@@ -7,6 +7,7 @@ namespace EasyAutoScript.Expressions
         public object VisitGetForegroundWindowExpression(GetForegroundWindowExpression expression);
         public object VisitGetWindowTitleExpression(GetWindowTitleExpression expression);
         public object VisitIdentifierExpression(IdentifierExpression expression);
+        public object VisitMouseGetPositionExpression(MouseGetPositionExpression mouseGetPositionExpression);
         public object VisitNumberLiteralExpression(NumberLiteralExpression expression);
         public object VisitStringLiteralExpression(StringLiteralExpression expression);
     }

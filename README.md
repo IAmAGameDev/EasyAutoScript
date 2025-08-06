@@ -12,10 +12,7 @@ This repository contains the code for a educational new coding language I create
 
 - [ ] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
-- [x] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
-- [ ] Handle line comments // or ; or something
-- [ ] Added a visitor pattern for the IExpressions
-- [ ] Get mouse position function (with flag of relative to HWND (ScreenToClient)).
+- [x] Get mouse position function (with flag of relative to HWND (ScreenToClient)).
 - [ ] Move mouse position function.
 - [ ] Send mouse click.
 - [ ] Send keyboard/mouse action(s) (SendInput with BlockInput usage/flag)
