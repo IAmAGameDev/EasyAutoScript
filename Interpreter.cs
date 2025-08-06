@@ -18,6 +18,9 @@ namespace EasyAutoScript
                     case ClearStatement:
                         ClearStatementHandler.Execute();
                         break;
+                    case SetForegroundWindowStatement setForegroundWindowStatement:
+                        NativeMethods.SetForegroundWindow(expressionEvaluator.ConvertToIntPtr(setForegroundWindowStatement.expression));
+                        break;
                     case SleepStatement sleepStatement:
                         {
                             double value = expressionEvaluator.ConvertToDouble(sleepStatement.expression);

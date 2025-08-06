@@ -15,7 +15,6 @@ This repository contains the code for a educational new coding language I create
 - [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
 - [ ] GetOpenWindowTitle()
 - [ ] Handle line comments // or ; or something
-- [ ] SetForeground Application - Sets the Foreground Application Based on HWND
 - [ ] Added a visitor pattern for the IExpressions
 - [ ] Get mouse position function (with flag of relative to HWND (ScreenToClient)).
 - [ ] Move mouse position function.
@@ -56,6 +55,11 @@ As this project is so small here is the current list of commands that is accepte
 
   - `[in]` None.
   - `[out]` `IntPtr` to the currently active Window.
+
+- `SetForegroundWindow(IntPtr)`
+
+  - `[in]` `IntPtr` value.
+  - `[out]` The Window with the hWnd `IntPtr` becomes the active window.
 
 - `Sleep(number)`
 

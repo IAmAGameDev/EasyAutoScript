@@ -20,6 +20,7 @@ namespace EasyAutoScript
 
         // Expressions
         GetForegroundWindow,
+        SetForegroundWindow,
 
         // Values
         Boolean,
