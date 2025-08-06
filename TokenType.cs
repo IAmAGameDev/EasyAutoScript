@@ -14,13 +14,14 @@ namespace EasyAutoScript
 
         // Statements
         Clear,
+        SetForegroundWindow,
         Sleep,
         Var,
         Write,
 
         // Expressions
         GetForegroundWindow,
-        SetForegroundWindow,
+        GetWindowTitle,
 
         // Values
         Boolean,
