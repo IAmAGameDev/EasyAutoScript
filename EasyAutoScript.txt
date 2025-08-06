@@ -1,4 +1,5 @@
-var x = GetWindowTitle()
+var x = GetAllOpenWindowTitles()
 Write(x)
-x = GetWindowTitle(123)
+Write("---------------------")
+x = GetAllOpenWindowTitles(true)
 Write(x)

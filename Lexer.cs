@@ -15,6 +15,7 @@ namespace EasyAutoScript
             { "var", TokenType.Var },
             { "Write", TokenType.Write },
 
+            { "GetAllOpenWindowTitles", TokenType.GetAllOpenWindowTitles },
             { "GetForegroundWindow", TokenType.GetForegroundWindow },
             { "GetWindowTitle", TokenType.GetWindowTitle },
 

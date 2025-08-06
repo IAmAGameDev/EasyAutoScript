@@ -20,6 +20,7 @@ namespace EasyAutoScript
         Write,
 
         // Expressions
+        GetAllOpenWindowTitles,
         GetForegroundWindow,
         GetWindowTitle,
 

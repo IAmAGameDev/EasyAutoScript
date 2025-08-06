@@ -11,6 +11,19 @@ namespace EasyAutoScript.Expressions
             return expression.Accept(this);
         }
 
+        public bool ConvertToBoolean(IExpression expression)
+        {
+            object value = expression.Accept(this);
+            if (value is bool boolValue)
+            {
+                return boolValue;
+            }
+            else
+            {
+                throw new EvaluatorException($"Expected a Boolean but recieved a: {value.GetType()}");
+            }
+        }
+
         public double ConvertToDouble(IExpression expression)
         {
             object value = expression.Accept(this);
@@ -45,6 +58,12 @@ namespace EasyAutoScript.Expressions
         public object VisitBooleanLiteralExpression(BooleanLiteralExpression expression)
         {
             return expression.value;
+        }
+
+        public object VisitGetAllOpenWindowTitlesExpression(GetAllOpenWindowTitlesExpression expression)
+        {
+            bool includeHidden = ConvertToBoolean(expression.expression ?? new BooleanLiteralExpression(false));
+            return NativeMethods.GetAllOpenWindowsTitles(includeHidden);
         }
 
         public object VisitGetForegroundWindowExpression(GetForegroundWindowExpression expression)
