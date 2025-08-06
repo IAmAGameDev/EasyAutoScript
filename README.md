@@ -13,7 +13,6 @@ This repository contains the code for a educational new coding language I create
 - [ ] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
 - [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
-- [ ] GetOpenWindowTitle()
 - [ ] Handle line comments // or ; or something
 - [ ] Added a visitor pattern for the IExpressions
 - [ ] Get mouse position function (with flag of relative to HWND (ScreenToClient)).
@@ -55,6 +54,11 @@ As this project is so small here is the current list of commands that is accepte
 
   - `[in]` None.
   - `[out]` `IntPtr` to the currently active Window.
+
+- `GetWindowTitle(optional IntPtr)`
+
+  - `[in]` optional `IntPtr` value.
+  - `[out]` A `string` value of the current active window if no `[in]` or the window for the `IntPtr` if passed.
 
 - `SetForegroundWindow(IntPtr)`
 

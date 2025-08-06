@@ -76,6 +76,19 @@ namespace EasyAutoScript
             return expression;
         }
 
+        private IExpression? ParseOptionalExpression()
+        {
+            Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
+            if (Peek().Type == TokenType.CloseParenthesis)
+            {
+                Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+                return null;
+            }
+            IExpression expression = ParseExpression();
+            Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+            return expression;
+        }
+
         /// <summary>
         /// Makes the Expression like a Number value from a TokenType
         /// </summary>
@@ -99,6 +112,8 @@ namespace EasyAutoScript
                 case TokenType.GetForegroundWindow:
                     ParseEmptyExpression();
                     return new GetForegroundWindowExpression();
+                case TokenType.GetWindowTitle:
+                    return new GetWindowTitleExpression(ParseOptionalExpression());
 
                 default:
                     throw new ParserException($"Unexpected token recieved expected a value recieved: {token}");

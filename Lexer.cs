@@ -10,12 +10,13 @@ namespace EasyAutoScript
         private readonly Dictionary<string, TokenType> identifiers = new()
         {
             { "Clear", TokenType.Clear },
+            { "SetForegroundWindow", TokenType.SetForegroundWindow },
             { "Sleep", TokenType.Sleep },
             { "var", TokenType.Var },
             { "Write", TokenType.Write },
 
             { "GetForegroundWindow", TokenType.GetForegroundWindow },
-            { "SetForegroundWindow", TokenType.SetForegroundWindow },
+            { "GetWindowTitle", TokenType.GetWindowTitle },
 
             { "true", TokenType.Boolean },
             { "false", TokenType.Boolean },

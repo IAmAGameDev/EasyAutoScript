@@ -52,6 +52,12 @@ namespace EasyAutoScript.Expressions
             return NativeMethods.GetForegroundWindow();
         }
 
+        public object VisitGetWindowTitleExpression(GetWindowTitleExpression expression)
+        {
+            IExpression trueExpression = expression.expression ?? new NumberLiteralExpression(0);
+            return NativeMethods.GetWindowTitle(ConvertToIntPtr(trueExpression));
+        }
+
         public object VisitIdentifierExpression(IdentifierExpression expression)
         {
             if (nameAndValue.TryGetValue(expression.name, out object? value))
