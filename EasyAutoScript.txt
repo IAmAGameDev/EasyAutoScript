@@ -1,5 +1,4 @@
-var x = GetAllOpenWindowTitles()
+var x = MouseGetPosition()
 Write(x)
-Write("---------------------")
-x = GetAllOpenWindowTitles(true)
+x = MouseGetPosition(123)
 Write(x)
