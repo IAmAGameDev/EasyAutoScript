@@ -42,6 +42,10 @@ namespace EasyAutoScript
                         {
                             nameAndValue[varAssignStatement.name] = expressionEvaluator.Evaluate(varAssignStatement.expression);
                         }
+                        else
+                        {
+                            throw new InterpreterException($"There is no variable with the identifier {varAssignStatement.name} already defined");
+                        }
                         break;
                     case WriteStatement writeStatement:
                         WriteStatementHandler writeStatementHandler = new(expressionEvaluator.Evaluate(writeStatement.expression));

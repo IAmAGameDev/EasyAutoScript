@@ -6,7 +6,7 @@ This repository contains the code for a educational new coding language I create
 
 `Errors`:
 
-- None currently known.
+- `var x = "abc" b = "d"` passes
 
 `Features`:
 
