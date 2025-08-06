@@ -15,7 +15,7 @@ namespace EasyAutoScript
         {
             while (!IsAtEnd())
             {
-                statements.Add(ScanToken());
+                statements.Add(ParseStatement());
             }
 
             return statements;
@@ -26,24 +26,36 @@ namespace EasyAutoScript
         /// </summary>
         /// <returns></returns> Returns the newly created IStatement
         /// <exception cref="Exception"></exception> Throws an error if encountering a unexprected Token
-        private IStatement ScanToken()
+        private IStatement ParseStatement()
         {
-            if (Match(TokenType.Clear))
+            TokenType current = Peek().Type;
+            switch (current)
             {
-                ParseEmptyExpression();
-                return new ClearStatement();
-            }
-            else if (Match(TokenType.Sleep))
-            {
-                return new SleepStatement(ParseVariableExpression());
-            }
-            else if (Match(TokenType.Write))
-            {
-                return new WriteStatement(ParseVariableExpression());
-            }
-            else
-            {
-                throw new ParserException($"END: {tokens[_current]}");
+                case TokenType.Clear:
+                    Advance();
+                    ParseEmptyExpression();
+                    return new ClearStatement();
+                case TokenType.Sleep:
+                    Advance();
+                    return new SleepStatement(ParseParenthesisedExpression());
+                case TokenType.Var:
+                    {
+                        Advance();
+                        string name = Advance().Lexeme;
+                        Consume(TokenType.Equals, $"Expected a \"=\" but recieved: {tokens[_current]}");
+                        return new VarStatement(name, ParseExpression());
+                    }
+                case TokenType.Write:
+                    Advance();
+                    return new WriteStatement(ParseParenthesisedExpression());
+                case TokenType.Identifier:
+                    {
+                        string name = Advance().Lexeme;
+                        Consume(TokenType.Equals, $"Expected a \"=\" but recieved: {tokens[_current]}");
+                        return new VarAssignStatement(name, ParseExpression());
+                    }
+                default:
+                    throw new ParserException($"Trying to parse an unexpected/unhandled token: {tokens[_current]}");
             }
         }
 
@@ -53,7 +65,7 @@ namespace EasyAutoScript
             Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
         }
 
-        private IExpression ParseVariableExpression()
+        private IExpression ParseParenthesisedExpression()
         {
             Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
             IExpression expression = ParseExpression();
@@ -68,11 +80,12 @@ namespace EasyAutoScript
         /// <exception cref="Exception"></exception> Throws an error if unhandled or incorrect TokenType
         private IExpression ParseExpression()
         {
-            Token token = tokens[_current];
+            Token token = Peek();
             Advance();
             return token.Type switch
             {
                 TokenType.Boolean => new BooleanLiteralExpression(Convert.ToBoolean(token.Literal)),
+                TokenType.Identifier => new IdentifierExpression(token.Lexeme),
                 TokenType.Number => new NumberLiteralExpression(Convert.ToDouble(token.Literal)),
                 TokenType.String => new StringLiteralExpression(Convert.ToString(token.Literal) ?? string.Empty),
                 _ => throw new ParserException($"Unexpected token recieved expected a value recieved: {token}")
