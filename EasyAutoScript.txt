@@ -1,4 +1,3 @@
-var x = "123"
+var x = GetForegroundWindow()
 Write(x)
-x = true
-Write(x)
+Write(GetForegroundWindow())

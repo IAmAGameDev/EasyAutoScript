@@ -80,16 +80,26 @@ namespace EasyAutoScript
         /// <exception cref="Exception"></exception> Throws an error if unhandled or incorrect TokenType
         private IExpression ParseExpression()
         {
-            Token token = Peek();
-            Advance();
-            return token.Type switch
+            Token token = Advance();
+            switch (token.Type)
             {
-                TokenType.Boolean => new BooleanLiteralExpression(Convert.ToBoolean(token.Literal)),
-                TokenType.Identifier => new IdentifierExpression(token.Lexeme),
-                TokenType.Number => new NumberLiteralExpression(Convert.ToDouble(token.Literal)),
-                TokenType.String => new StringLiteralExpression(Convert.ToString(token.Literal) ?? string.Empty),
-                _ => throw new ParserException($"Unexpected token recieved expected a value recieved: {token}")
-            };
+                case TokenType.Boolean:
+                    return new BooleanLiteralExpression(Convert.ToBoolean(token.Literal));
+                case TokenType.Number:
+                    return new NumberLiteralExpression(Convert.ToDouble(token.Literal));
+                case TokenType.String:
+                    return new StringLiteralExpression(Convert.ToString(token.Literal) ?? string.Empty);
+
+                case TokenType.Identifier:
+                    return new IdentifierExpression(token.Lexeme);
+
+                case TokenType.GetForegroundWindow:
+                    ParseEmptyExpression();
+                    return new GetForegroundWindowExpression();
+
+                default:
+                    throw new ParserException($"Unexpected token recieved expected a value recieved: {token}");
+            }
         }
 
         /// <summary>
