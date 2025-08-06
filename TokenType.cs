@@ -5,8 +5,8 @@ namespace EasyAutoScript
         OpenParenthesis,
         CloseParenthesis,
 
+        Equals,
         ForwardSlash,
-
         Comma,
 
         // Identifier
@@ -20,6 +20,7 @@ namespace EasyAutoScript
         // Statements
         Clear,
         Sleep,
+        Var,
         Write,
 
         // Expressions

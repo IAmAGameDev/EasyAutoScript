@@ -11,6 +11,7 @@ namespace EasyAutoScript
         {
             { "Clear", TokenType.Clear },
             { "Sleep", TokenType.Sleep },
+            { "var", TokenType.Var },
             { "Write", TokenType.Write },
 
             { "true", TokenType.Boolean },
@@ -33,6 +34,11 @@ namespace EasyAutoScript
                         break;
                     case ')':
                         AddToken(TokenType.CloseParenthesis, ")");
+                        break;
+
+                    // Equals
+                    case '=':
+                        AddToken(TokenType.Equals, "=");
                         break;
 
                     // Comment
@@ -140,7 +146,7 @@ namespace EasyAutoScript
         {
             int start = _current - 1;
 
-            while (!IsAtEnd() && Peek() != '(' && Peek() != ')')
+            while (!IsAtEnd() && (char.IsLetterOrDigit(Peek()) || Peek() == '_'))
             {
                 Advance();
             }
