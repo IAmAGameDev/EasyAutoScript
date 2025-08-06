@@ -12,7 +12,7 @@ This repository contains the code for a educational new coding language I create
 
 - [ ] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
-- [ ] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
+- [x] GetAllOpenWindowTitles() - Creating a optional Boolean default: false
 - [ ] Handle line comments // or ; or something
 - [ ] Added a visitor pattern for the IExpressions
 - [ ] Get mouse position function (with flag of relative to HWND (ScreenToClient)).
@@ -49,6 +49,11 @@ As this project is so small here is the current list of commands that is accepte
 
   - `[in]` None.
   - `[out]` `console` text cleared.
+
+- `GetAllOpenWindowTitles(optional boolean)`
+
+  - `[in]` optional excludeHidden (overlays) `boolean` value.
+  - `[out]` `List<string>` of all open windows including/excluding hidden.
 
 - `GetForegroundWindow()`
 
