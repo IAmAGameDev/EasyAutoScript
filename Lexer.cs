@@ -15,6 +15,7 @@ namespace EasyAutoScript
             { "Write", TokenType.Write },
 
             { "GetForegroundWindow", TokenType.GetForegroundWindow },
+            { "SetForegroundWindow", TokenType.SetForegroundWindow },
 
             { "true", TokenType.Boolean },
             { "false", TokenType.Boolean },

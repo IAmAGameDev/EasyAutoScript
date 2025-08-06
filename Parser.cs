@@ -35,6 +35,9 @@ namespace EasyAutoScript
                     Advance();
                     ParseEmptyExpression();
                     return new ClearStatement();
+                case TokenType.SetForegroundWindow:
+                    Advance();
+                    return new SetForegroundWindowStatement(ParseParenthesisedExpression());
                 case TokenType.Sleep:
                     Advance();
                     return new SleepStatement(ParseParenthesisedExpression());
