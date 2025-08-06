@@ -18,7 +18,9 @@ namespace EasyAutoScript
             { "GetAllOpenWindowTitles", TokenType.GetAllOpenWindowTitles },
             { "GetForegroundWindow", TokenType.GetForegroundWindow },
             { "GetWindowTitle", TokenType.GetWindowTitle },
+
             { "MouseGetPosition", TokenType.MouseGetPosition },
+            { "MouseSetPositionRelative", TokenType.MouseSetPositionRelative },
 
             { "true", TokenType.Boolean },
             { "false", TokenType.Boolean },
@@ -47,10 +49,16 @@ namespace EasyAutoScript
                         AddToken(TokenType.Equals, "=");
                         break;
 
+                    // Comma
+                    case ',':
+                        AddToken(TokenType.Comma, ",");
+                        break;
+
                     // Comment
                     case '/':
                         Comment();
                         break;
+
 
                     // Increase line counter
                     case '\n':
@@ -70,11 +78,12 @@ namespace EasyAutoScript
 
                     default:
                         // Number
-                        if (char.IsNumber(c))
+                        if ((c == '-' && char.IsNumber(PeekNext())) || char.IsNumber(c))
                         {
                             Number();
                             break;
                         }
+                        // Identifier
                         else if (char.IsLetterOrDigit(c))
                         {
                             Identifier();
@@ -194,6 +203,15 @@ namespace EasyAutoScript
         private char Peek()
         {
             return _source[_current];
+        }
+
+        /// <summary>
+        /// Return the next char c
+        /// </summary>
+        /// <returns></returns> Return the next char c
+        private char PeekNext()
+        {
+            return _source[_current + 1];
         }
 
         /// <summary>

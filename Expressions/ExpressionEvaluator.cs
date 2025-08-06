@@ -11,7 +11,7 @@ namespace EasyAutoScript.Expressions
 
         public bool ConvertToBoolean(IExpression expression)
         {
-            object value = expression.Accept(this);
+            object value = Evaluate(expression);
             if (value is bool boolValue)
             {
                 return boolValue;
@@ -24,7 +24,7 @@ namespace EasyAutoScript.Expressions
 
         public double ConvertToDouble(IExpression expression)
         {
-            object value = expression.Accept(this);
+            object value = Evaluate(expression);
             if (value is double doubleValue)
             {
                 return doubleValue;
@@ -37,7 +37,7 @@ namespace EasyAutoScript.Expressions
 
         public IntPtr ConvertToIntPtr(IExpression expression)
         {
-            object value = expression.Accept(this);
+            object value = Evaluate(expression);
             if (value is IntPtr intPtrValue)
             {
                 return intPtrValue;

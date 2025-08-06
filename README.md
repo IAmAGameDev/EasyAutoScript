@@ -10,10 +10,11 @@ This repository contains the code for a educational new coding language I create
 
 `Features`:
 
+- [ ] MouseSetPosition(x, y, OPTIONAL hWnd)
+- [ ] MouseFakeSetPosition(x, y, hWnd)
+
 - [ ] Add !true and !false handling
 - [ ] Add a try block to the Program.cs for file load and custom Exceptions
-- [x] Get mouse position function (with flag of relative to HWND (ScreenToClient)).
-- [ ] Move mouse position function.
 - [ ] Send mouse click.
 - [ ] Send keyboard/mouse action(s) (SendInput with BlockInput usage/flag)
 - [ ] `HARD` List Vars - WIP
@@ -66,6 +67,11 @@ As this project is so small here is the current list of commands that is accepte
 
   - `[in]` optional `IntPtr` value.
   - `[out]` The mouse position on the screen coordinates or if a `IntPtr` was supplied it is relative to that given window.
+
+- `MouseSetPositionRelative(int, int)`
+
+  - `[in]` int X and int Y position.
+  - `[out]` Moves the mouse position relative to the current position by X and Y.
 
 - `SetForegroundWindow(IntPtr)`
 

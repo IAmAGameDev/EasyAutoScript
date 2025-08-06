@@ -18,6 +18,9 @@ namespace EasyAutoScript
                     case ClearStatement:
                         ClearStatementHandler.Execute();
                         break;
+                    case MouseSetPositionRelativeStatement mouseSetPositionRelativeStatement:
+                        NativeMethods.MouseSetPositionRelative(expressionEvaluator.ConvertToDouble(mouseSetPositionRelativeStatement.expression), expressionEvaluator.ConvertToDouble(mouseSetPositionRelativeStatement.expression2));
+                        break;
                     case SetForegroundWindowStatement setForegroundWindowStatement:
                         NativeMethods.SetForegroundWindow(expressionEvaluator.ConvertToIntPtr(setForegroundWindowStatement.expression));
                         break;

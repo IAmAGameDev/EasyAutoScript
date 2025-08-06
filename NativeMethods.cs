@@ -35,6 +35,10 @@ namespace EasyAutoScript
         [return: MarshalAs(UnmanagedType.Bool)]
         private static partial bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
 
+        [LibraryImport("user32.dll", EntryPoint = "SetCursorPos")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool SetCursorPosImport(int x, int y);
+
         [LibraryImport("user32.dll", EntryPoint = "SetForegroundWindow")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static partial bool SetForegroundWindowImport(IntPtr hWnd);
@@ -114,6 +118,12 @@ namespace EasyAutoScript
         public static void SetForegroundWindow(IntPtr hWnd)
         {
             SetForegroundWindowImport(hWnd);
+        }
+
+        internal static void MouseSetPositionRelative(double x, double y)
+        {
+            GetCursorPosImport(out POINT point);
+            SetCursorPosImport(point.X + Convert.ToInt32(x), point.Y + Convert.ToInt32(y));
         }
     }
 }
