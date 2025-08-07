@@ -28,82 +28,105 @@ namespace EasyAutoScript
         /// <exception cref="Exception"></exception> Throws an error if encountering a unexprected Token
         private IStatement ParseStatement()
         {
-            TokenType current = Peek().Type;
-            switch (current)
-            {
-                case TokenType.Clear:
-                    Advance();
-                    ParseEmptyExpression();
-                    return new ClearStatement();
-                case TokenType.MouseSetPositionRelative:
-                    Advance();
-                    List<IExpression> expressions = ParseMultiExpression(2);
-                    return new MouseSetPositionRelativeStatement(expressions[0], expressions[1]);
-                case TokenType.SetForegroundWindow:
-                    Advance();
-                    return new SetForegroundWindowStatement(ParseMultiExpression(1)[0]);
-                case TokenType.Sleep:
-                    Advance();
-                    return new SleepStatement(ParseMultiExpression(1)[0]);
-                case TokenType.Var:
-                    {
-                        Advance();
-                        string name = Advance().Lexeme;
-                        Consume(TokenType.Equals, $"Expected a \"=\" but recieved: {tokens[_current]}");
-                        return new VarStatement(name, ParseExpression());
-                    }
-                case TokenType.Write:
-                    Advance();
-                    return new WriteStatement(ParseMultiExpression(1)[0]);
-                case TokenType.Identifier:
-                    {
-                        string name = Advance().Lexeme;
-                        Consume(TokenType.Equals, $"Expected a \"=\" but recieved: {tokens[_current]}");
-                        return new VarAssignStatement(name, ParseExpression());
-                    }
-                default:
-                    throw new ParserException($"Trying to parse an unexpected/unhandled token: {tokens[_current]}");
-            }
-        }
+            Token current = Advance();
 
-        private List<IExpression> ParseMultiExpression(int expectedInputs)
-        {
+            if (Peek().Type != TokenType.OpenParenthesis)
+            {
+                if (current.Type == TokenType.Var)
+                {
+                    string name = Advance().Lexeme;
+                    Consume(TokenType.Equals, $"Expected a \"=\" but recieved: {tokens[_current]}");
+                    return new VarStatement(name, ParseExpression());
+                }
+                else if (current.Type == TokenType.Identifier)
+                {
+                    string name = current.Lexeme;
+                    Consume(TokenType.Equals, $"Expected a \"=\" but recieved: {tokens[_current]}");
+                    return new VarAssignStatement(name, ParseExpression());
+                }
+                else
+                {
+                    throw new Exception($"Unexpected token encountered: {Peek()}");
+                }
+            }
+
             Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
 
-            List<IExpression> expressions = [];
+            IStatement statement;
+            switch (current.Type)
+            {
+                case TokenType.Clear:
+                    statement = new ClearStatement();
+                    break;
+                case TokenType.MouseSetPosition:
+                    {
+                        List<IExpression?> expressions = ParseMultiExpression(3);
+                        statement = new MouseSetPositionStatement(expressions[0]!, expressions[1]!, expressions[2]);
+                        break;
+                    }
+                case TokenType.MouseSetPositionRelative:
+                    {
+                        List<IExpression?> expressions = ParseMultiExpression(2);
+                        statement = new MouseSetPositionRelativeStatement(expressions[0]!, expressions[1]!);
+                        break;
+                    }
+                case TokenType.SetForegroundWindow:
+                    {
+                        var expression = ParseExpression() ?? throw new ParserException("SetForegroundWindowStatement requires a non-null expression.");
+                        statement = new SetForegroundWindowStatement(expression);
+                        break;
+                    }
+                case TokenType.Sleep:
+                    {
+                        var expression = ParseExpression() ?? throw new ParserException("SetForegroundWindowStatement requires a non-null expression.");
+                        statement = new SleepStatement(expression);
+                        break;
+                    }
+                case TokenType.Write:
+                    {
+                        var expression = ParseExpression() ?? throw new ParserException("SetForegroundWindowStatement requires a non-null expression.");
+                        statement = new WriteStatement(expression);
+                        break;
+                    }
+
+                default:
+                    throw new ParserException($"Trying to parse an unexpected/unhandled token: {current}");
+            }
+            Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+            return statement;
+        }
+
+        private List<IExpression?> ParseMultiExpression(int expectedInputs)
+        {
+            List<IExpression?> expressions = [];
             expressions.Add(ParseExpression());
 
             while (!IsAtEnd() && Peek().Type != TokenType.CloseParenthesis)
             {
                 Consume(TokenType.Comma, $"Expected a \",\" but recieved: {tokens[_current]}");
-                expressions.Add(ParseExpression());
+                expressions.Add(ParseOptionalExpression());
             }
 
-            if (expectedInputs != expressions.Count)
+            if (expressions.Count > expectedInputs)
             {
                 throw new ParserException($"Expected {expectedInputs} inputs but recieved {expressions.Count}");
             }
 
-            Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
-            return expressions;
-        }
+            while (expressions.Count != expectedInputs)
+            {
+                expressions.Add(new EmptyExpression());
+            }
 
-        private void ParseEmptyExpression()
-        {
-            Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
-            Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+            return expressions;
         }
 
         private IExpression? ParseOptionalExpression()
         {
-            Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
             if (Peek().Type == TokenType.CloseParenthesis)
             {
-                Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
                 return null;
             }
             IExpression expression = ParseExpression();
-            Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
             return expression;
         }
 
@@ -128,18 +151,35 @@ namespace EasyAutoScript
                     return new IdentifierExpression(token.Lexeme);
 
                 case TokenType.GetAllOpenWindowTitles:
-                    return new GetAllOpenWindowTitlesExpression(ParseOptionalExpression());
+                    {
+                        Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
+                        GetAllOpenWindowTitlesExpression expression = new(ParseOptionalExpression());
+                        Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+                        return expression;
+                    }
                 case TokenType.GetForegroundWindow:
-                    ParseEmptyExpression();
+                    Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
+                    Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
                     return new GetForegroundWindowExpression();
                 case TokenType.GetWindowTitle:
-                    return new GetWindowTitleExpression(ParseOptionalExpression());
+                    {
+                        Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
+                        GetWindowTitleExpression expression = new(ParseOptionalExpression());
+                        Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+                        return expression;
+                    }
 
                 case TokenType.MouseGetPosition:
-                    return new MouseGetPositionExpression(ParseOptionalExpression());
+                    {
+                        Consume(TokenType.OpenParenthesis, $"Expected a \"(\" but recieved: {tokens[_current]}");
+                        MouseGetPositionExpression expression = new(ParseOptionalExpression());
+                        Consume(TokenType.CloseParenthesis, $"Expected a \")\" but recieved: {tokens[_current]}");
+                        return expression;
+                    }
 
                 default:
                     throw new ParserException($"Unexpected token recieved expected a value, recieved: {token}");
+
             }
         }
 

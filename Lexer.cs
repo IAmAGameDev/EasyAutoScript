@@ -20,6 +20,7 @@ namespace EasyAutoScript
             { "GetWindowTitle", TokenType.GetWindowTitle },
 
             { "MouseGetPosition", TokenType.MouseGetPosition },
+            { "MouseSetPosition", TokenType.MouseSetPosition },
             { "MouseSetPositionRelative", TokenType.MouseSetPositionRelative },
 
             { "true", TokenType.Boolean },

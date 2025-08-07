@@ -5,6 +5,10 @@ namespace EasyAutoScript
 {
     public partial class NativeMethods
     {
+        [LibraryImport("user32.dll", EntryPoint = "ClientToScreen")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool ClientToScreenImport(IntPtr hWnd, ref POINT lpPoint);
+
         [LibraryImport("user32.dll", EntryPoint = "EnumWindows")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static partial bool EnumWindowsImport(EnumWindowsProc enumProc, IntPtr lParam);
@@ -33,7 +37,7 @@ namespace EasyAutoScript
 
         [LibraryImport("user32.dll", EntryPoint = "ScreenToClient")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static partial bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
+        private static partial bool ScreenToClientImport(IntPtr hWnd, ref POINT lpPoint);
 
         [LibraryImport("user32.dll", EntryPoint = "SetCursorPos")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -110,7 +114,7 @@ namespace EasyAutoScript
                 {
                     throw new InterpreterException($"Unable to find window with given IntPtr hWnd: {hWnd}");
                 }
-                ScreenToClient(hWnd, ref lpPoint);
+                ScreenToClientImport(hWnd, ref lpPoint);
             }
             return lpPoint;
         }
@@ -120,22 +124,32 @@ namespace EasyAutoScript
             SetForegroundWindowImport(hWnd);
         }
 
-        internal static void MouseSetPositionRelative(double x, double y)
+        public static void MouseSetPositionRelative(double x, double y)
         {
             GetCursorPosImport(out POINT point);
             SetCursorPosImport(point.X + Convert.ToInt32(x), point.Y + Convert.ToInt32(y));
         }
+
+        public static void MouseSetPosition(double x, double y, IntPtr hWnd)
+        {
+            POINT point = new(Convert.ToInt32(x), Convert.ToInt32(y));
+            if (hWnd != 0)
+            {
+                ClientToScreenImport(hWnd, ref point);
+            }
+            SetCursorPosImport(point.X, point.Y);
+        }
     }
-}
 
-[StructLayout(LayoutKind.Sequential)]
-public struct POINT
-{
-    public int X;
-    public int Y;
-
-    public static implicit operator Point(POINT point)
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINT(int x, int y)
     {
-        return new Point(point.X, point.Y);
+        public int X = x;
+        public int Y = y;
+
+        public static implicit operator Point(POINT point)
+        {
+            return new Point(point.X, point.Y);
+        }
     }
 }

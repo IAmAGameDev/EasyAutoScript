@@ -1,20 +1,24 @@
 
 namespace EasyAutoScript.Expressions
 {
-    public class ExpressionEvaluator(Dictionary<string, object> nameAndValue) : IExpressionVisitor
+    public class ExpressionEvaluator(Dictionary<string, object?> nameAndValue) : IExpressionVisitor
     {
         #region Public Helpers
-        public object Evaluate(IExpression expression)
+        public object? Evaluate(IExpression expression)
         {
             return expression.Accept(this);
         }
 
         public bool ConvertToBoolean(IExpression expression)
         {
-            object value = Evaluate(expression);
+            object? value = Evaluate(expression);
             if (value is bool boolValue)
             {
                 return boolValue;
+            }
+            else if (value is null)
+            {
+                return false;
             }
             else
             {
@@ -24,20 +28,24 @@ namespace EasyAutoScript.Expressions
 
         public double ConvertToDouble(IExpression expression)
         {
-            object value = Evaluate(expression);
+            object? value = Evaluate(expression);
             if (value is double doubleValue)
             {
                 return doubleValue;
             }
+            else if (value is null)
+            {
+                return 0;
+            }
             else
             {
-                throw new EvaluatorException($"Expected a Number but recieved a: {value.GetType()}");
+                throw new EvaluatorException($"Expected a Double but recieved a: {value.GetType()}");
             }
         }
 
         public IntPtr ConvertToIntPtr(IExpression expression)
         {
-            object value = Evaluate(expression);
+            object? value = Evaluate(expression);
             if (value is IntPtr intPtrValue)
             {
                 return intPtrValue;
@@ -45,6 +53,10 @@ namespace EasyAutoScript.Expressions
             else if (value is double doubleValue)
             {
                 return (IntPtr)doubleValue;
+            }
+            else if (value is null)
+            {
+                return 0;
             }
             else
             {
@@ -56,6 +68,11 @@ namespace EasyAutoScript.Expressions
         public object VisitBooleanLiteralExpression(BooleanLiteralExpression expression)
         {
             return expression.value;
+        }
+
+        public object? VisitEmptyExpression(EmptyExpression expression)
+        {
+            return null;
         }
 
         public object VisitGetAllOpenWindowTitlesExpression(GetAllOpenWindowTitlesExpression expression)
@@ -75,7 +92,7 @@ namespace EasyAutoScript.Expressions
             return NativeMethods.GetWindowTitle(ConvertToIntPtr(trueExpression));
         }
 
-        public object VisitIdentifierExpression(IdentifierExpression expression)
+        public object? VisitIdentifierExpression(IdentifierExpression expression)
         {
             if (nameAndValue.TryGetValue(expression.name, out object? value))
             {

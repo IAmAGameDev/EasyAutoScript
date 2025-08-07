@@ -4,7 +4,7 @@ namespace EasyAutoScript.Expressions
     {
         public readonly string name = name;
 
-        public object Accept(IExpressionVisitor visitor)
+        public object? Accept(IExpressionVisitor visitor)
         {
             return visitor.VisitIdentifierExpression(this);
         }

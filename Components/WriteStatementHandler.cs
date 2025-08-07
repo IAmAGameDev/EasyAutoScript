@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace EasyAutoScript.Components
 {
-    public class WriteStatementHandler(object value)
+    public class WriteStatementHandler(object? value)
     {
         public void Execute()
         {
@@ -24,6 +24,10 @@ namespace EasyAutoScript.Components
                     }
                     break;
                 default:
+                    if (value is null)
+                    {
+                        throw new InterpreterException($"A null value was passed in");
+                    }
                     throw new InterpreterException($"Unhandled Write Type: {value.GetType()}");
             }
         }
