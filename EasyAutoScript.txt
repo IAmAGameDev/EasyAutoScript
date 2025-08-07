@@ -1,1 +1,1 @@
-var x = "abc" b = "d"
+MouseSetPosition(100, 100, GetForegroundWindow())

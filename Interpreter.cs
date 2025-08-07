@@ -6,7 +6,7 @@ namespace EasyAutoScript
 {
     public class Interpreter(List<IStatement> statements)
     {
-        private readonly Dictionary<string, object> nameAndValue = [];
+        private readonly Dictionary<string, object?> nameAndValue = [];
 
         public async Task Interpret()
         {
@@ -17,6 +17,9 @@ namespace EasyAutoScript
                 {
                     case ClearStatement:
                         ClearStatementHandler.Execute();
+                        break;
+                    case MouseSetPositionStatement mouseSetPositionStatement:
+                        NativeMethods.MouseSetPosition(expressionEvaluator.ConvertToDouble(mouseSetPositionStatement.expression), expressionEvaluator.ConvertToDouble(mouseSetPositionStatement.expression2), expressionEvaluator.ConvertToIntPtr(mouseSetPositionStatement.expression3 ?? new NumberLiteralExpression(0)));
                         break;
                     case MouseSetPositionRelativeStatement mouseSetPositionRelativeStatement:
                         NativeMethods.MouseSetPositionRelative(expressionEvaluator.ConvertToDouble(mouseSetPositionRelativeStatement.expression), expressionEvaluator.ConvertToDouble(mouseSetPositionRelativeStatement.expression2));
