@@ -28,3 +28,6 @@ var x = "abc"
 Write(x)
 x = GetWindowTitle(GetForegroundWindow())
 Write(x)
+
+MouseSetPosition(500, 500)
+MouseSetPosition(100, 100, GetForegroundWindow())

@@ -6,11 +6,11 @@ This repository contains the code for a educational new coding language I create
 
 `Errors`:
 
-- `var x = "abc" b = "d"` passes
+- None Known.
 
 `Features`:
 
-- [ ] MouseSetPosition(x, y, OPTIONAL hWnd)
+- [x] MouseSetPosition(x, y, OPTIONAL hWnd)
 - [ ] MouseFakeSetPosition(x, y, hWnd)
 
 - [ ] Add negative tests (ones I know will fail / should fail)
@@ -73,9 +73,14 @@ As this project is so small here is the current list of commands that is accepte
   - `[in]` optional `IntPtr` value.
   - `[out]` The mouse position on the screen coordinates or if a `IntPtr` was supplied it is relative to that given window.
 
+- `MouseSetPosition(int, int, optional IntPtr)`
+
+  - `[in]` `int` X, `int` Y position and optional `IntPtr` for a hWnd.
+  - `[out]` Moves the mouse positon towards the given coordinates (if an `IntPtr` was given, uses the relative window position instead).
+
 - `MouseSetPositionRelative(int, int)`
 
-  - `[in]` int X and int Y position.
+  - `[in]` `int` X and `int` Y position.
   - `[out]` Moves the mouse position relative to the current position by X and Y.
 
 - `SetForegroundWindow(IntPtr)`
